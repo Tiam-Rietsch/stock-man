@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users - Stock Management</title>
+  <link rel="stylesheet" href="users.css">
+</head>
+
+<body>
+  <div class="sidebar">
+    <!-- Sidebar content (same as dashboard) -->
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <h1>Users</h1>
+      <button class="button primary" id="addUserButton">Add User</button>
+    </div>
+
+    <!-- Users Table -->
+    <div class="users-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-user='{"name":"John Doe","email":"john@example.com","role":"Manager"}'>
+            <td>John Doe</td>
+            <td>john@example.com</td>
+            <td>Manager</td>
+            <td>
+              <button class="button success edit-user">Edit</button>
+              <button class="button danger delete-user">Delete</button>
+            </td>
+          </tr>
+          <tr data-user='{"name":"Jane Smith","email":"jane@example.com","role":"Worker"}'>
+            <td>Jane Smith</td>
+            <td>jane@example.com</td>
+            <td>Worker</td>
+            <td>
+              <button class="button success edit-user">Edit</button>
+              <button class="button danger delete-user">Delete</button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add/Edit User Modal -->
+  <div class="modal-overlay" id="userModalOverlay">
+    <div class="modal">
+      <button class="close-button" id="closeUserModal">&times;</button>
+      <h2 id="modalTitle">Add User</h2>
+      <form id="userForm">
+        <div class="form-group">
+          <label for="userName">Name</label>
+          <input type="text" id="userName" required>
+        </div>
+        <div class="form-group">
+          <label for="userEmail">Email</label>
+          <input type="email" id="userEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="userRole">Role</label>
+          <select id="userRole" required>
+            <option value="Manager">Manager</option>
+            <option value="Worker">Worker</option>
+          </select>
+        </div>
+        <button type="submit" class="button primary">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete User Modal -->
+  <div class="modal-overlay" id="deleteModalOverlay">
+    <div class="modal">
+      <button class="close-button" id="closeDeleteModal">&times;</button>
+      <h2>Delete User</h2>
+      <p>Are you sure you want to delete this user?</p>
+      <div class="modal-actions">
+        <button class="button danger" id="confirmDelete">Delete</button>
+        <button class="button secondary" id="cancelDelete">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="users.js"></script>
+</body>
+
+</html>

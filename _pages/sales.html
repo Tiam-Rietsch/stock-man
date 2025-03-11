@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales - Stock Management</title>
+  <link rel="stylesheet" href="sales.css">
+</head>
+<body>
+  <div class="sidebar">
+    <!-- Sidebar content (same as dashboard) -->
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <h1>Sales</h1>
+    </div>
+
+    <!-- Form and Image Container -->
+    <div class="form-image-container">
+      <!-- Form -->
+      <div class="sales-form">
+        <h2>Record a Sale</h2>
+        <form id="salesForm">
+          <div class="form-columns">
+            <!-- Left Column -->
+            <div class="form-column">
+              <!-- Product -->
+              <div class="form-group">
+                <label for="product">Product</label>
+                <select id="product" required>
+                  <option value="" disabled selected>Select a product</option>
+                  <option value="router">Router</option>
+                  <option value="switch">Switch</option>
+                </select>
+              </div>
+
+              <!-- Brand -->
+              <div class="form-group">
+                <label for="brand">Brand</label>
+                <select id="brand" required>
+                  <option value="" disabled selected>Select a brand</option>
+                  <option value="cisco">Cisco</option>
+                  <option value="huawei">Huawei</option>
+                </select>
+              </div>
+
+              <!-- Category (Non-editable) -->
+              <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" id="category" value="Electronics" readonly>
+              </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="form-column">
+              <!-- Unit Price (Non-editable) -->
+              <div class="form-group">
+                <label for="unitPrice">Unit Price</label>
+                <input type="number" id="unitPrice" value="100" readonly>
+              </div>
+
+              <!-- Quantity -->
+              <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" required>
+              </div>
+
+              <!-- Total Price (Computed, Non-editable) -->
+              <div class="form-group">
+                <label for="totalPrice">Total Price</label>
+                <input type="number" id="totalPrice" readonly>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="button primary">Record Sale</button>
+        </form>
+      </div>
+
+      <!-- Product Image -->
+      <div class="product-image-container">
+        <div class="product-image">
+          <img id="productImage" src="placeholder.jpg" alt="Product Image">
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales Table -->
+    <div class="sales-table">
+      <h2>Recent Sales</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sale-row" data-sale='{"product":"Router","brand":"Cisco","category":"Electronics","image":"router.jpg","unitPrice":100,"quantity":5,"totalPrice":500,"date":"2023-10-01"}'>
+            <td>Router</td>
+            <td>5</td>
+            <td>$100</td>
+            <td>$500</td>
+            <td>2023-10-01</td>
+          </tr>
+          <tr class="sale-row" data-sale='{"product":"Switch","brand":"Huawei","category":"Electronics","image":"switch.jpg","unitPrice":80,"quantity":3,"totalPrice":240,"date":"2023-10-01"}'>
+            <td>Switch</td>
+            <td>3</td>
+            <td>$80</td>
+            <td>$240</td>
+            <td>2023-10-01</td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="sales.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Products - Stock Managemet{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'products/products.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+{% include '../utils/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block content %}
+<div class="main-content">
+    <div class="header">
+        <h1>Products</h1>
+        <button class="button primary" id="addProductButton">Add Product</button>
+    </div>
+
+    <!-- Products Table -->
+    <div class="products-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="product-row"
+                    data-product='{"name":"Router","brand":"Cisco","category":"Electronics","quantity":50,"unitPrice":100,"image":"router.jpg"}'>
+                    <td>Router</td>
+                    <td>Cisco</td>
+                    <td>Electronics</td>
+                    <td>50</td>
+                    <td>$100</td>
+                    <td>
+                        <button class="button success edit-product">Edit</button>
+                        <button class="button danger delete-product">Delete</button>
+                    </td>
+                </tr>
+                <tr class="product-row"
+                    data-product='{"name":"Switch","brand":"Huawei","category":"Electronics","quantity":30,"unitPrice":80,"image":"switch.jpg"}'>
+                    <td>Switch</td>
+                    <td>Huawei</td>
+                    <td>Electronics</td>
+                    <td>30</td>
+                    <td>$80</td>
+                    <td>
+                        <button class="button success edit-product">Edit</button>
+                        <button class="button danger delete-product">Delete</button>
+                    </td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add/Edit Product Modal -->
+<div class="modal-overlay" id="productModalOverlay">
+    <div class="modal">
+        <button class="close-button" id="closeProductModal">&times;</button>
+        <h2 id="modalTitle">Add Product</h2>
+        <div class="form-image-container">
+            <!-- Form -->
+            <form id="productForm">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" list="productList" required>
+                    <datalist id="productList">
+                        <option value="Router">
+                        <option value="Switch">
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <select id="brand" required>
+                        <option value="Cisco">Cisco</option>
+                        <option value="Huawei">Huawei</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" id="category" value="Electronics" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="unitPrice">Unit Price</label>
+                    <input type="number" id="unitPrice" required>
+                </div>
+                <button type="submit" class="button primary">Save</button>
+            </form>
+
+            <!-- Product Image -->
+            <div class="product-image-container">
+                <div class="product-image">
+                    <img id="productImage" src="placeholder.jpg" alt="Product Image">
+                </div>
+                <input type="file" id="uploadImage" accept="image/*" style="display: none;">
+                <button class="button secondary" id="uploadImageButton">Upload Image</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Product Details Modal -->
+<div class="modal-overlay" id="detailsModalOverlay">
+    <div class="modal">
+        <button class="close-button" id="closeDetailsModal">&times;</button>
+        <h2>Product Details</h2>
+        <div class="details-content">
+            <div class="product-image">
+                <img id="detailsProductImage" src="placeholder.jpg" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <p><strong>Name:</strong> <span id="detailsProductName"></span></p>
+                <p><strong>Brand:</strong> <span id="detailsBrand"></span></p>
+                <p><strong>Category:</strong> <span id="detailsCategory"></span></p>
+                <p><strong>Quantity:</strong> <span id="detailsQuantity"></span></p>
+                <p><strong>Unit Price:</strong> <span id="detailsUnitPrice"></span></p>
+                <p><strong>Unit Price:</strong> <span id="detailsUnitPrice"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="deleteModalOverlay">
+    <div class="modal">
+        <button class="close-button" id="closeDeleteModal">&times;</button>
+        <h2>Delete Product</h2>
+        <p>Are you sure you want to delete this product?</p>
+        <div class="modal-actions">
+            <button class="button danger" id="confirmDelete">Delete</button>
+            <button class="button secondary" id="cancelDelete">Cancel</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+    <script src="{% static 'products/products.js' %}"></script>
+{% endblock %}

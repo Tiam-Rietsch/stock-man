@@ -1,0 +1,75 @@
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Make sidebar fixed */
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Allow sidebar to scroll if content overflows */
+  }
+  
+  .sidebar .logo {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .sidebar .logo img {
+    width: 100px;
+    height: auto;
+  }
+  
+  .sidebar nav {
+    flex: 1;
+  }
+  
+  .sidebar nav a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar nav a:hover {
+    background-color: #007bff;
+  }
+  
+  .sidebar nav a.active {
+    background-color: #007bff;
+  }
+  
+  .sidebar .user-profile {
+    text-align: center;
+    margin-top: auto;
+  }
+  
+  .sidebar .user-profile p {
+    margin: 5px 0;
+  }
+  
+  .sidebar .user-profile .role {
+    font-size: 14px;
+    color: #ccc;
+  }
+  
+  .sidebar .logout-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .sidebar .logout-button:hover {
+    background-color: #c82333;
+  }

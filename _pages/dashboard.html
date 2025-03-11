@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Stock Management</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <img src="logo.png" alt="Stock Management Logo">
+    </div>
+    <nav>
+      <a href="dashboard.html" class="active">📊 Dashboard</a>
+      <a href="products.html">📦 Products</a>
+      <a href="sales.html">💰 Sales</a>
+      
+      <!-- Manager Only Links -->
+      <a href="reports.html">📈 Reports</a>
+      <a href="users.html">👥 Users</a>
+    </nav>
+    <div class="user-profile">
+      <p>John Doe</p>
+      <p class="role">Manager</p>
+      <button class="logout-button">Logout</button>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <h1>Dashboard</h1>
+    </div>
+    <div class="metrics-grid">
+      <!-- Key Metrics -->
+      <div class="metric-card">
+        <h3>Total Stock Value</h3>
+        <p>$50,000</p>
+      </div>
+      <div class="metric-card">
+        <h3>Total Sales Today</h3>
+        <p>$5,000</p>
+      </div>
+      <div class="metric-card">
+        <h3>Low Stock Alerts</h3>
+        <p>3 Items</p>
+      </div>
+      <div class="metric-card">
+        <h3>Total Products</h3>
+        <p>120 Products</p>
+      </div>
+    </div>
+    <div class="charts-grid">
+      <!-- Sales Trends -->
+      <div class="chart-card">
+        <h3>Sales Trends</h3>
+        <div class="chart-placeholder line-chart"></div>
+      </div>
+      <!-- Top Selling Products -->
+      <div class="chart-card">
+        <h3>Top Selling Products</h3>
+        <div class="chart-placeholder bar-chart"></div>
+      </div>
+    </div>
+    <div class="bottom-grid">
+      <!-- Inventory Overview -->
+      <div class="chart-card">
+        <h3>Inventory Overview</h3>
+        <div class="chart-placeholder pie-chart"></div>
+      </div>
+      <!-- Recent Activities -->
+      <div class="chart-card">
+        <h3>Recent Activities</h3>
+        <div class="recent-activities">
+          <ul>
+            <li>2023-10-01: Added 50 Routers to Inventory</li>
+            <li>2023-10-01: Recorded Sale of 5 Switches</li>
+            <li>2023-10-01: Updated Stock for Router</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
