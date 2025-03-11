@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory - Stock Management</title>
+  <link rel="stylesheet" href="inventory.css">
+</head>
+<body>
+  <div class="sidebar">
+    <!-- Sidebar content (same as dashboard) -->
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <h1>Inventory</h1>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button class="button primary" id="searchButton">Search</button>
+      </div>
+    </div>
+
+    <!-- Inventory Table -->
+    <div class="inventory-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Quantity in Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="product-row" data-product='{"name":"Router","brand":"Cisco","category":"Electronics","quantity":50,"image":"router.jpg"}'>
+            <td>Router</td>
+            <td>Cisco</td>
+            <td>Electronics</td>
+            <td>50</td>
+            <td>
+              <button class="button success add-quantity">Add</button>
+              <button class="button primary edit-quantity">Edit</button>
+            </td>
+          </tr>
+          <tr class="product-row" data-product='{"name":"Switch","brand":"Huawei","category":"Electronics","quantity":30,"image":"switch.jpg"}'>
+            <td>Switch</td>
+            <td>Huawei</td>
+            <td>Electronics</td>
+            <td>30</td>
+            <td>
+              <button class="button success add-quantity">Add</button>
+              <button class="button primary edit-quantity">Edit</button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Quantity Modal -->
+  <div class="modal-overlay" id="addModalOverlay">
+    <div class="modal">
+      <button class="close-button" id="closeAddModal">&times;</button>
+      <h2>Add Quantity Supplied</h2>
+      <div class="form-image-container">
+        <!-- Product Image -->
+        <div class="product-image-container">
+          <div class="product-image">
+            <img id="addProductImage" src="placeholder.jpg" alt="Product Image">
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="addQuantityForm">
+          <div class="form-group">
+            <label for="addProductName">Product Name</label>
+            <input type="text" id="addProductName" readonly>
+          </div>
+          <div class="form-group">
+            <label for="addBrand">Brand</label>
+            <input type="text" id="addBrand" readonly>
+          </div>
+          <div class="form-group">
+            <label for="addCategory">Category</label>
+            <input type="text" id="addCategory" readonly>
+          </div>
+          <div class="form-group">
+            <label for="quantitySupplied">Quantity Supplied</label>
+            <input type="number" id="quantitySupplied" required>
+          </div>
+          <button type="submit" class="button primary save-button">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Quantity Modal -->
+  <div class="modal-overlay" id="editModalOverlay">
+    <div class="modal">
+      <button class="close-button" id="closeEditModal">&times;</button>
+      <h2>Edit Quantity in Stock</h2>
+      <div class="form-image-container">
+        <!-- Product Image -->
+        <div class="product-image-container">
+          <div class="product-image">
+            <img id="editProductImage" src="placeholder.jpg" alt="Product Image">
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="editQuantityForm">
+          <div class="form-group">
+            <label for="editProductName">Product Name</label>
+            <input type="text" id="editProductName" readonly>
+          </div>
+          <div class="form-group">
+            <label for="editBrand">Brand</label>
+            <input type="text" id="editBrand" readonly>
+          </div>
+          <div class="form-group">
+            <label for="editCategory">Category</label>
+            <input type="text" id="editCategory" readonly>
+          </div>
+          <div class="form-group">
+            <label for="editQuantity">Quantity in Stock</label>
+            <input type="number" id="editQuantity" required>
+          </div>
+          <button type="submit" class="button primary save-button">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="inventory.js"></script>
+</body>
+</html>

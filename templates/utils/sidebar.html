@@ -3,17 +3,20 @@
         <img src="logo.png" alt="Stock Management Logo">
     </div>
     <nav>
-        <a href="dashboard.html" class="active">📊 Dashboard</a>
-        <a href="products.html">📦 Products</a>
-        <a href="sales.html">💰 Sales</a>
+        <a href="dashboard.html" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Dashboard</a>
+        <a href="products.html" {% if active == 'products' %}class="active"{% endif %}>📦 Products</a>
+        <a href="sales.html" {% if active == 'sales' %}class="active"{% endif %}>💰 Sales</a>
 
         <!-- Manager Only Links -->
-        <a href="reports.html">📈 Reports</a>
-        <a href="users.html">👥 Users</a>
+        <a href="reports.html" {% if active == 'reports' %}class="active"{% endif %}>📈 Reports</a>
+        <a href="users.html" {% if active == 'users' %}class="active"{% endif %}>👥 Users</a>
     </nav>
     <div class="user-profile">
-        <p>John Doe</p>
-        <p class="role">Manager</p>
-        <button class="logout-button">Logout</button>
+        <p>{{ user.name|capfirst }}</p>
+        <p class="role">{{ user.get_role_display }}</p>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button class="logout-button" type="submit">Logout</button>
+        </form>
     </div>
 </div>

@@ -7,18 +7,18 @@ class ProductBrands(models.TextChoices):
 
 
 class PRoductCategory(models.TextChoices):
-    electric = 'ELECTRIC', 'ELECTRIC'
-    electronic = 'ELECTRONIC', 'ELECTRONIC'
+    electric = 'A', 'ELECTRIC'
+    electronic = 'B', 'ELECTRONIC'
 
 
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     brand = models.CharField(max_length=1, choices=ProductBrands.choices, default=ProductBrands.cisco)
-    category = models.CharField(max_length=10, choices=PRoductCategory.choices, default=PRoductCategory.electronic)
+    category = models.CharField(max_length=1, choices=PRoductCategory.choices, default=PRoductCategory.electronic)
+    quantity = models.IntegerField()
     sid = models.CharField(max_length=255)
     description = models.TextField()
-    quantity = models.IntegerField()
     unit_price = models.IntegerField()
     image = models.ImageField(upload_to='products/')
 

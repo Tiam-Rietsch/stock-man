@@ -10,48 +10,26 @@
 {% block content %}
 <div class="signup-container">
     <div class="signup-card">
-      <div class="logo">
-        <img src="logo.png" alt="Stock Management Logo">
-      </div>
-      <h2>Create an Account</h2>
-      <p>Sign up to get started</p>
-      <form class="signup-form">
-        <!-- Email -->
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Enter your email" required>
+        <div class="logo">
+            <img src="logo.png" alt="Stock Management Logo">
         </div>
+        <h2>Create an Account</h2>
+        <p>Sign up to get started</p>
+        <form class="signup-form" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
 
-        <!-- Name -->
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" placeholder="Enter your name" required>
+            <!-- Submit Button -->
+            <button type="submit" class="button primary">Sign Up</button>
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="{% url 'login' %}">Log in</a>
         </div>
-
-        <!-- Phone Number -->
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" placeholder="Enter your phone number" required>
-        </div>
-
-        <!-- Password -->
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" required>
-        </div>
-
-        <!-- Repeat Password -->
-        <div class="form-group">
-          <label for="repeatPassword">Repeat Password</label>
-          <input type="password" id="repeatPassword" placeholder="Repeat your password" required>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="button primary">Sign Up</button>
-      </form>
-      <div class="login-link">
-        Already have an account? <a href="{% url 'login' %}">Log in</a>
-      </div>
     </div>
-  </div>
+</div>
 {% endblock %}

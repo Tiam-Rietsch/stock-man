@@ -1,19 +1,16 @@
-{% extends '../base.html' %}
-{% load static %}
-
-{% block title %}Products - Stock Managemet{% endblock %}
-
-{% block style %}
-<link rel="stylesheet" href="{% static 'sidebar.css' %}">
-<link rel="stylesheet" href="{% static 'products/productss.css' %}">
-{% endblock %}
-
-{% block sidebar %}
-{% include '../utils/sidebar.html' with active='products' %}
-{% endblock sidebar %}
-
-{% block content %}
-<div class="main-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - Stock Management</title>
+  <link rel="stylesheet" href="products.css">
+</head>
+<body>
+  <div class="sidebar">
+    <!-- Sidebar content (same as dashboard) -->
+  </div>
+  <div class="main-content">
     <div class="header">
       <h1>Products</h1>
       <button class="button primary" id="addProductButton">Add Product</button>
@@ -126,9 +123,7 @@
       </div>
     </div>
   </div>
-{% endblock %}
 
-
-{% block script %}
-<script src="{% static 'products/products.js' %}"></script>
-{% endblock %}
+  <script src="products.js"></script>
+</body>
+</html>

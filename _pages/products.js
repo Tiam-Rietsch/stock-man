@@ -67,6 +67,17 @@ document.querySelectorAll(".product-row").forEach((row) => {
     // Ignore clicks on buttons
     if (e.target.tagName === "BUTTON") return;
 
+    // Get product data from the row's data attribute
+    const productData = JSON.parse(row.getAttribute("data-product"));
+
+    // Populate the details modal with product data
+    document.getElementById("detailsProductName").textContent = productData.name;
+    document.getElementById("detailsBrand").textContent = productData.brand;
+    document.getElementById("detailsCategory").textContent = productData.category;
+    document.getElementById("detailsQuantity").textContent = productData.quantity;
+    document.getElementById("detailsUnitPrice").textContent = `$${productData.unitPrice}`;
+    document.getElementById("detailsProductImage").src = productData.image;
+
     // Show the details modal
     detailsModalOverlay.classList.add("active");
   });
@@ -77,4 +88,57 @@ detailsModalOverlay.addEventListener("click", (e) => {
   if (e.target === detailsModalOverlay) {
     detailsModalOverlay.classList.remove("active");
   }
+});
+
+// Handle image upload
+const uploadImageButton = document.getElementById("uploadImageButton");
+const uploadImageInput = document.getElementById("uploadImage");
+const productImage = document.getElementById("productImage");
+
+uploadImageButton.addEventListener("click", (e) => {
+  e.preventDefault(); // Prevent default button behavior
+  uploadImageInput.click(); // Trigger the file input dialog
+});
+
+uploadImageInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      productImage.src = e.target.result; // Set the image source to the uploaded file
+    };
+    reader.readAsDataURL(file); // Read the file as a data URL
+  }
+});
+
+// Handle form submission for adding/editing a product
+const productForm = document.getElementById("productForm");
+
+productForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(productForm);
+
+  // Append the uploaded image file to the form data
+  if (uploadImageInput.files[0]) {
+    formData.append("image", uploadImageInput.files[0]);
+  }
+
+  fetch("/your-django-endpoint/", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Handle success (e.g., reload the page or update the table)
+        window.location.reload();
+      } else {
+        // Handle error
+        alert("There was an error submitting the form.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 });

@@ -16,6 +16,7 @@ class CustomManager(UserManager):
         email = self.normalize_email(email)
         user = self.model(name=name, email=email,  phone_number=phone_number, **extra_fields)
         user.set_password(password)
+        print('\n\nhello guys this is happenning\n\n')
         return user.save(using=self._db)
     
     def create_superuser(self, name=None, email=None, password=None,phone_number=None, **extra_fields):
@@ -40,8 +41,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = CustomManager()
 
     USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'phone_number']
 
     def __str__(self):
-        return f'{self.role} | {self.email} : {self.name.capitalize()}'
+        return f'{self.get_role_display()} | {self.email} : {self.name.capitalize()}'
 
