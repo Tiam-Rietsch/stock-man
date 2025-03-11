@@ -1,14 +1,13 @@
-{% extends '../base.html' %}
-{% load static %}
-
-{% block title %}Signup - Stock Management{% endblock %}
-
-{% block style %}
-<link rel="stylesheet" href="{% static 'useraccounts/signup.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="signup-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup - Stock Management</title>
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+  <div class="signup-container">
     <div class="signup-card">
       <div class="logo">
         <img src="logo.png" alt="Stock Management Logo">
@@ -50,8 +49,9 @@
         <button type="submit" class="button primary">Sign Up</button>
       </form>
       <div class="login-link">
-        Already have an account? <a href="{% url 'login' %}">Log in</a>
+        Already have an account? <a href="login.html">Log in</a>
       </div>
     </div>
   </div>
-{% endblock %}
+</body>
+</html>
