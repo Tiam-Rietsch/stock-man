@@ -24,7 +24,7 @@
 
       {% for product in products %}
       <!-- Product Cards -->
-      <div class="product-card" data-product='{"name":"{{ product.name }}","brand":"{{ product.brand }}","category":"{{product.category }}","quantity":{{ product.quantity }},"unitPrice":{{ product.unit_price }},"image":"{{ product.image.url }}","sid":"{{ product.sid }}","description":"{{ product.description }}"}'>
+      <div class="product-card" data-product='{"name":"{{ product.name }}","brand":"{{ product.brand }}","category":"{{product.category }}","quantity":{{ product.quantity }},"unitPrice":{{ product.unit_price }},"image":"{{ product.image.url }}","sid":"{{ product.sid }}","description":"{{ product.description }}", "min_stock": "{{product.min_stock}}" }'>
         <div class="product-image">
           <img src="{{ product.image.url }}" alt="Router">
         </div>
@@ -87,6 +87,10 @@
             <label for="addUnitPrice">Unit Price</label>
             <input type="number" id="addUnitPrice" name="unit_price" required>
           </div>
+          <div class="form-group">
+            <label for="addMinStock">Min Stock</label>
+            <input type="number" id="addMinStock" name="min_stock" required>
+          </div>
           <input type="file" id="addUploadImage" accept="image/*" name="image" style="display: none;">
           <button type="submit" class="button primary save-button" {% if user.role == 'W' %}hidden{% endif %}>Save</button>
         </form>
@@ -142,6 +146,10 @@
           <div class="form-group">
             <label for="editUnitPrice">Unit Price</label>
             <input type="number" id="editUnitPrice" name="unit_price" required>
+          </div>
+          <div class="form-group">
+            <label for="editMinStock">Min Stock</label>
+            <input type="number" id="editMinStock" name="min_stock" required>
           </div>
           <input type="file" id="editUploadImage" accept="image/*" name="image" style="display: none;">
           <button type="submit" class="button primary save-button" {% if user.role == 'W' %}hidden{% endif %}>Save</button>

@@ -40,6 +40,7 @@ document.querySelectorAll(".edit-product").forEach((button) => {
     document.getElementById("editDescription").value = productData.description;
     document.getElementById("editUnitPrice").value = productData.unitPrice;
     document.getElementById("editProductImage").src = productData.image;
+    document.getElementById("editMinStock").value = productData.min_stock;
 
     // Open the edit modal
     editModalOverlay.classList.add("active");

@@ -1,0 +1,94 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Stock Management{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/dashboard.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+{% include '../utils/sidebar.html' with active='dashboard' %}
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+	<div class="header">
+		<h1>Dashboard</h1>
+	</div>
+
+	<input type="text" id="dataUrl" value="{% url 'dashboard_data' %}" hidden>
+
+	<div class="metrics-grid">
+		<!-- Key Metrics -->
+		<div class="metric-card">
+			<h3>Total Stock Value</h3>
+			<p>{{ total_stock_value }} FCFA</p>
+		</div>
+		<div class="metric-card">
+			<h3>Total Sales Today</h3>
+			<p>{{ total_day_sales }} FCFA</p>
+		</div>
+		<div class="metric-card">
+			<h3>Low Stock Alerts</h3>
+			<p>{{ low_stock_count }} alerts</p>
+		</div>
+		<div class="metric-card">
+			<h3>Total Products</h3>
+			<p>{{ total_products_count }} products</p>
+		</div>
+	</div>
+	<div class="charts-grid">
+		<!-- Sales Trends -->
+		<div class="chart-card">
+			<div class="chart-header">
+				<h3>Sales Trends</h3>
+				<div class="toggle-buttons">
+					<button id="yearly-trend" class="active">Year</button>
+					<button id="monthly-trend">Month</button>
+				</div>
+			</div>
+			<div class="chart-placeholder line-chart"></div>
+		</div>
+		<!-- Top Selling Products -->
+		<div class="chart-card">
+			<h3>Top Selling Products</h3>
+			<div class="chart-placeholder bar-chart"></div>
+		</div>
+	</div>
+	<div class="bottom-grid">
+		<!-- Inventory Overview -->
+		<div class="chart-card">
+			<h3>Inventory Overview</h3>
+			<div class="chart-placeholder pie-chart"></div>
+		</div>
+		<!-- Recent Activities -->
+		<div class="chart-card">
+			<h3>Recent Activities</h3>
+			<div class="recent-activities">
+				<ul>
+					<li>2023-10-01: Added 50 Routers to Inventory</li>
+					<li>2023-10-01: Recorded Sale of 5 Switches</li>
+					<li>2023-10-01: Updated Stock for Router</li>
+					<li>2023-09-30: Added 20 Cables to Inventory</li>
+					<li>2023-09-30: Recorded Sale of 10 Adapters</li>
+					<li>2023-09-29: Updated Stock for Switch</li>
+					<li>2023-09-28: Added 15 Modems to Inventory</li>
+					<li>2023-09-28: Recorded Sale of 8 Hubs</li>
+					<li>2023-09-27: Updated Stock for Cable</li>
+					<li>2023-09-27: Added 30 Patch Panels to Inventory</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<!-- Include ApexCharts -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<!-- Include your dashboard.js -->
+<script src="{% static 'dashboard/dashboard.js' %}"></script>
+{% endblock %}

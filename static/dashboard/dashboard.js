@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Dummy Data for Charts
-    const dataUrl = document.getElementById("dataUrl").getAttribute("data-url")
+    const dataUrl = document.getElementById("dataUrl").value
     fetch(dataUrl, {})
         .then(response => response.json())
         .then(data => {
             populateChartData(data)
         })
+        .catch(error => console.error(error))
 });
 
 function populateChartData(data) {
@@ -14,7 +15,7 @@ function populateChartData(data) {
             {
                 name: "Sales",
                 // amount of money sold for each month of the current year
-                data: [30, 40, 35, 50, 49, 60, 70, 91, 125, 110, 95, 80],
+                data: data.yearly_sales,
             },
         ],
         categories: [
@@ -38,9 +39,7 @@ function populateChartData(data) {
             {
                 name: "Sales",
                 // amount of money sold for each day of the current month
-                data: [
-                    5, 10, 7, 12, 15, 20, 18, 22, 25, 30, 28, 32, 35, 40, 38, 42, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110,
-                ],
+                data: data.monthly_sales,
             },
         ],
         categories: Array.from({ length: 31 }, (_, i) => (i + 1).toString()),
@@ -127,7 +126,7 @@ function populateChartData(data) {
             colors: ["#28a745"],
             xaxis: {
                 // product list
-                categories: ["Router", "Switch", "Cable", "Adapter", "Modem", "Hub", "Patch Panel"],
+                categories: data.top_selling_products.products,
             },
             yaxis: {
                 title: {
@@ -138,7 +137,7 @@ function populateChartData(data) {
                 {
                     name: "Units Sold",
                     // quantity sold for each product
-                    data: [44, 55, 41, 67, 22, 43, 21],
+                    data: data.top_selling_products.quantities,
                 },
             ],
         }
@@ -155,9 +154,9 @@ function populateChartData(data) {
             },
             colors: ["#007bff", "#28a745", "#dc3545", "#ffc107"],
             // quantity of products left
-            series: [44, 55, 13, 33],
+            series: data.inventory_overview.quantities,
             // products in the inventory
-            labels: ["Routers", "Switches", "Cables", "Adapters"],
+            labels: data.inventory_overview.labels,
             dataLabels: {
                 enabled: true,
                 formatter: function (val) {

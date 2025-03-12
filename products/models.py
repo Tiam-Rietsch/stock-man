@@ -17,6 +17,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=1, choices=ProductBrands.choices, default=ProductBrands.cisco)
     category = models.CharField(max_length=1, choices=ProductCategory.choices, default=ProductCategory.electronic)
     quantity = models.IntegerField(default=0)
+    min_stock = models.IntegerField(default=3)
     sid = models.CharField(max_length=255)
     description = models.TextField()
     unit_price = models.FloatField()

@@ -24,6 +24,7 @@ def product_add_view(request):
         sid = request.POST['sid']
         description = request.POST['description']
         unit_price = request.POST['unit_price']
+        min_stock = request.POST['min_stock']
 
         print(request.FILES)
 
@@ -36,7 +37,8 @@ def product_add_view(request):
             sid=sid,
             description=description,
             unit_price=unit_price,
-            image=image
+            image=image,
+            min_stock=min_stock
         )
         product.save()
 
@@ -53,6 +55,7 @@ def product_edit_view(request, id):
         description = request.POST['description']
         unit_price = request.POST['unit_price']
         image = request.FILES['image']
+        min_stock = request.POST['min_stock']
 
         product = Product.objects.get(pk=id)
         product.name = name
@@ -62,6 +65,7 @@ def product_edit_view(request, id):
         product.description = description
         product.unit_price = unit_price
         product.image = image
+        product.min_stock = min_stock
 
         product.save()
 

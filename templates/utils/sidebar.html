@@ -9,7 +9,7 @@
 
         <!-- Manager Only Links -->
         {% if user.role == 'M' %}
-        <a href="dashboard.html" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Dashboard</a>
+        <a href="{% url 'dashboard' %}" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Dashboard</a>
         <a href="reports.html" {% if active == 'reports' %}class="active"{% endif %}>📈 Reports</a>
         <a href="{% url 'user_list' %}" {% if active == 'users' %}class="active"{% endif %}>👥 Users</a>
         {% endif %}
