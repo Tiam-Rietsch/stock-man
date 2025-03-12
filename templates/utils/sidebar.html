@@ -10,7 +10,7 @@
 
         <!-- Manager Only Links -->
         <a href="reports.html" {% if active == 'reports' %}class="active"{% endif %}>📈 Reports</a>
-        <a href="users.html" {% if active == 'users' %}class="active"{% endif %}>👥 Users</a>
+        <a href="{% url 'user_list' %}" {% if active == 'users' %}class="active"{% endif %}>👥 Users</a>
     </nav>
     <div class="user-profile">
         <p>{{ user.name|capfirst }}</p>

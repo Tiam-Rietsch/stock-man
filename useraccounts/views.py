@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import SignupForm, LoginForm
 
+from .models import User
 
 def login_view(request):
     login_form = LoginForm()
@@ -40,3 +41,26 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+def user_list_view(request):
+    users = User.objects.all()
+    context = {
+        'users': users
+    }
+    return render(request, 'useraccounts/users.html', context)
+
+
+def toggle_activate_user(request, id):
+    if request.method == 'POST':
+        user = User.objects.get(pk=id)
+        user.is_active = True if not user.is_active else False
+        user.save()
+        return redirect('user_list')
+    
+
+def delete_user_view(request, id):
+    if request.method == 'POST':
+        user = User.objects.get(pk=id)
+        user.delete()
+        return redirect('user_list')
