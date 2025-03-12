@@ -58,43 +58,43 @@
     </div>
   </div>
 
-  <!-- Add/Edit Product Modal -->
-  <div class="modal-overlay" id="productModalOverlay">
+  <!-- Add Product Modal -->
+  <div class="modal-overlay" id="addModalOverlay">
     <div class="modal">
-      <button class="close-button" id="closeProductModal">&times;</button>
-      <h2 id="modalTitle">Add Product</h2>
+      <button class="close-button" id="closeAddModal">&times;</button>
+      <h2>Add Product</h2>
       <div class="form-image-container">
         <!-- Form -->
-        <form id="productForm">
+        <form id="addProductForm">
           <div class="form-group">
-            <label for="productName">Product Name</label>
-            <input type="text" id="productName" required>
+            <label for="addProductName">Product Name</label>
+            <input type="text" id="addProductName" required>
           </div>
           <div class="form-group">
-            <label for="brand">Brand</label>
-            <select id="brand" required>
+            <label for="addBrand">Brand</label>
+            <select id="addBrand" required>
               <option value="C">Cisco</option>
               <option value="H">Huawei</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="category">Category</label>
-            <select id="category" required>
+            <label for="addCategory">Category</label>
+            <select id="addCategory" required>
               <option value="E">Electronics</option>
               <option value="N">Networking</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="sid">SID</label>
-            <input type="text" id="sid" required>
+            <label for="addSid">SID</label>
+            <input type="text" id="addSid" required>
           </div>
           <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" rows="4" required></textarea>
+            <label for="addDescription">Description</label>
+            <textarea id="addDescription" rows="4" required></textarea>
           </div>
           <div class="form-group">
-            <label for="unitPrice">Unit Price</label>
-            <input type="number" id="unitPrice" required>
+            <label for="addUnitPrice">Unit Price</label>
+            <input type="number" id="addUnitPrice" required>
           </div>
           <button type="submit" class="button primary save-button">Save</button>
         </form>
@@ -102,10 +102,63 @@
         <!-- Product Image -->
         <div class="product-image-container">
           <div class="product-image">
-            <img id="productImage" src="placeholder.jpg" alt="Product Image">
+            <img id="addProductImage" src="placeholder.jpg" alt="Product Image">
           </div>
-          <input type="file" id="uploadImage" accept="image/*" style="display: none;">
-          <button class="button secondary" id="uploadImageButton">Upload Image</button>
+          <input type="file" id="addUploadImage" accept="image/*" style="display: none;">
+          <button class="button secondary" id="addUploadImageButton">Upload Image</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Product Modal -->
+  <div class="modal-overlay" id="editModalOverlay">
+    <div class="modal">
+      <button class="close-button" id="closeEditModal">&times;</button>
+      <h2>Edit Product</h2>
+      <div class="form-image-container">
+        <!-- Form -->
+        <form id="editProductForm">
+          <div class="form-group">
+            <label for="editProductName">Product Name</label>
+            <input type="text" id="editProductName" required>
+          </div>
+          <div class="form-group">
+            <label for="editBrand">Brand</label>
+            <select id="editBrand" required>
+              <option value="C">Cisco</option>
+              <option value="H">Huawei</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editCategory">Category</label>
+            <select id="editCategory" required>
+              <option value="E">Electronics</option>
+              <option value="N">Networking</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editSid">SID</label>
+            <input type="text" id="editSid" required>
+          </div>
+          <div class="form-group">
+            <label for="editDescription">Description</label>
+            <textarea id="editDescription" rows="4" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="editUnitPrice">Unit Price</label>
+            <input type="number" id="editUnitPrice" required>
+          </div>
+          <button type="submit" class="button primary save-button">Save</button>
+        </form>
+
+        <!-- Product Image -->
+        <div class="product-image-container">
+          <div class="product-image">
+            <img id="editProductImage" src="placeholder.jpg" alt="Product Image">
+          </div>
+          <input type="file" id="editUploadImage" accept="image/*" style="display: none;">
+          <button class="button secondary" id="editUploadImageButton">Upload Image</button>
         </div>
       </div>
     </div>

@@ -1,15 +1,13 @@
 // Get references to modals and buttons
 const addProductButton = document.getElementById("addProductButton");
-const productModalOverlay = document.getElementById("productModalOverlay");
-const closeProductModal = document.getElementById("closeProductModal");
+const addModalOverlay = document.getElementById("addModalOverlay");
+const closeAddModal = document.getElementById("closeAddModal");
+const editModalOverlay = document.getElementById("editModalOverlay");
+const closeEditModal = document.getElementById("closeEditModal");
 const deleteModalOverlay = document.getElementById("deleteModalOverlay");
 const closeDeleteModal = document.getElementById("closeDeleteModal");
 const confirmDelete = document.getElementById("confirmDelete");
 const cancelDelete = document.getElementById("cancelDelete");
-const uploadImageButton = document.getElementById("uploadImageButton");
-const uploadImageInput = document.getElementById("uploadImage");
-const productImage = document.getElementById("productImage");
-const productForm = document.getElementById("productForm");
 
 // Variables to track current product card
 let currentProductCard = null;
@@ -17,10 +15,9 @@ let currentProductCard = null;
 // Add Product Button
 addProductButton.addEventListener("click", () => {
   // Reset the form for adding a new product
-  productForm.reset();
-  productImage.src = "placeholder.jpg";
-  document.getElementById("modalTitle").textContent = "Add Product";
-  productModalOverlay.classList.add("active");
+  document.getElementById("addProductForm").reset();
+  document.getElementById("addProductImage").src = "placeholder.jpg";
+  addModalOverlay.classList.add("active");
 });
 
 // Edit Product Buttons
@@ -32,20 +29,17 @@ document.querySelectorAll(".edit-product").forEach((button) => {
     // Get product data from the card's data attribute
     const productData = JSON.parse(currentProductCard.getAttribute("data-product"));
 
-    // Populate the form with product data
-    document.getElementById("productName").value = productData.name;
-    document.getElementById("brand").value = productData.brand;
-    document.getElementById("category").value = productData.category;
-    document.getElementById("sid").value = productData.sid;
-    document.getElementById("description").value = productData.description;
-    document.getElementById("unitPrice").value = productData.unitPrice;
-    productImage.src = productData.image;
+    // Populate the edit form with product data
+    document.getElementById("editProductName").value = productData.name;
+    document.getElementById("editBrand").value = productData.brand;
+    document.getElementById("editCategory").value = productData.category;
+    document.getElementById("editSid").value = productData.sid;
+    document.getElementById("editDescription").value = productData.description;
+    document.getElementById("editUnitPrice").value = productData.unitPrice;
+    document.getElementById("editProductImage").src = productData.image;
 
-    // Change the modal title
-    document.getElementById("modalTitle").textContent = "Edit Product";
-
-    // Open the product modal
-    productModalOverlay.classList.add("active");
+    // Open the edit modal
+    editModalOverlay.classList.add("active");
   });
 });
 
@@ -59,8 +53,12 @@ document.querySelectorAll(".delete-product").forEach((button) => {
 });
 
 // Close Modals
-closeProductModal.addEventListener("click", () => {
-  productModalOverlay.classList.remove("active");
+closeAddModal.addEventListener("click", () => {
+  addModalOverlay.classList.remove("active");
+});
+
+closeEditModal.addEventListener("click", () => {
+  editModalOverlay.classList.remove("active");
 });
 
 closeDeleteModal.addEventListener("click", () => {
@@ -80,32 +78,79 @@ confirmDelete.addEventListener("click", () => {
   }
 });
 
-// Handle image upload
-uploadImageButton.addEventListener("click", (e) => {
+// Handle image upload for Add Modal
+document.getElementById("addUploadImageButton").addEventListener("click", (e) => {
   e.preventDefault();
-  uploadImageInput.click();
+  document.getElementById("addUploadImage").click();
 });
 
-uploadImageInput.addEventListener("change", (e) => {
+document.getElementById("addUploadImage").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      productImage.src = e.target.result;
+      document.getElementById("addProductImage").src = e.target.result;
     };
     reader.readAsDataURL(file);
   }
 });
 
-// Handle form submission for adding/editing a product
-productForm.addEventListener("submit", (e) => {
+// Handle image upload for Edit Modal
+document.getElementById("editUploadImageButton").addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("editUploadImage").click();
+});
+
+document.getElementById("editUploadImage").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById("editProductImage").src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Handle form submission for adding a product
+document.getElementById("addProductForm").addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const formData = new FormData(productForm);
+  const formData = new FormData(document.getElementById("addProductForm"));
 
   // Append the uploaded image file to the form data
-  if (uploadImageInput.files[0]) {
-    formData.append("image", uploadImageInput.files[0]);
+  if (document.getElementById("addUploadImage").files[0]) {
+    formData.append("image", document.getElementById("addUploadImage").files[0]);
+  }
+
+  fetch("/your-django-endpoint/", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Handle success (e.g., reload the page or update the grid)
+        window.location.reload();
+      } else {
+        // Handle error
+        alert("There was an error submitting the form.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+});
+
+// Handle form submission for editing a product
+document.getElementById("editProductForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(document.getElementById("editProductForm"));
+
+  // Append the uploaded image file to the form data
+  if (document.getElementById("editUploadImage").files[0]) {
+    formData.append("image", document.getElementById("editUploadImage").files[0]);
   }
 
   fetch("/your-django-endpoint/", {

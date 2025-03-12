@@ -6,7 +6,7 @@ class ProductBrands(models.TextChoices):
     sdmo = 'S', 'SDMO'
 
 
-class PRoductCategory(models.TextChoices):
+class ProductCategory(models.TextChoices):
     electric = 'A', 'ELECTRIC'
     electronic = 'B', 'ELECTRONIC'
 
@@ -15,8 +15,8 @@ class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     brand = models.CharField(max_length=1, choices=ProductBrands.choices, default=ProductBrands.cisco)
-    category = models.CharField(max_length=1, choices=PRoductCategory.choices, default=PRoductCategory.electronic)
-    quantity = models.IntegerField()
+    category = models.CharField(max_length=1, choices=ProductCategory.choices, default=ProductCategory.electronic)
+    quantity = models.IntegerField(default=0)
     sid = models.CharField(max_length=255)
     description = models.TextField()
     unit_price = models.IntegerField()

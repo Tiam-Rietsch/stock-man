@@ -1,0 +1,137 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block ttile %}Stock Management - Inventory{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'products/inventory.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+{% include '../utils/sidebar.html' with active='inventory' %}
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="header">
+        <h1>Inventory</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button class="button primary" id="searchButton">Search</button>
+        </div>
+    </div>
+
+    <!-- Inventory Table -->
+    <div class="inventory-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Quantity in Stock</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="product-row"
+                    data-product='{"name":"{{ product.name }}","brand":"{{ product.get_brand_display }}","category":"{{ product.get_category_display }}","quantity":{{ product.quantity }},"image":"{{ product.image.url }}"}'>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.get_brand_display }}</td>
+                    <td>{{ product.get_category_display }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        <button class="button success add-quantity" stock-add-url="{% url 'stock_update' product.id %}?supplied=true">Add</button>
+                        <button class="button primary edit-quantity" stock-edit-url="{% url 'stock_update' product.id %}?supplied=false">Edit</button>
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Quantity Modal -->
+<div class="modal-overlay" id="addModalOverlay">
+    <div class="modal">
+        <button class="close-button" id="closeAddModal">&times;</button>
+        <h2>Add Quantity Supplied</h2>
+        <div class="form-image-container">
+            <!-- Product Image -->
+            <div class="product-image-container">
+                <div class="product-image">
+                    <img id="addProductImage" src="placeholder.jpg" alt="Product Image">
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form id="addQuantityForm" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="addProductName">Product Name</label>
+                    <input type="text" id="addProductName" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="addBrand">Brand</label>
+                    <input type="text" id="addBrand" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="addCategory">Category</label>
+                    <input type="text" id="addCategory" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="quantitySupplied">Quantity Supplied</label>
+                    <input type="number" id="quantitySupplied" name="quantity" required>
+                </div>
+                <button type="submit" class="button primary save-button">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Quantity Modal -->
+<div class="modal-overlay" id="editModalOverlay">
+    <div class="modal">
+        <button class="close-button" id="closeEditModal">&times;</button>
+        <h2>Edit Quantity in Stock</h2>
+        <div class="form-image-container">
+            <!-- Product Image -->
+            <div class="product-image-container">
+                <div class="product-image">
+                    <img id="editProductImage" src="placeholder.jpg" alt="Product Image">
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form id="editQuantityForm" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="editProductName">Product Name</label>
+                    <input type="text" id="editProductName" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editBrand">Brand</label>
+                    <input type="text" id="editBrand" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editCategory">Category</label>
+                    <input type="text" id="editCategory" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editQuantity">Quantity in Stock</label>
+                    <input type="number" id="editQuantity" required>
+                </div>
+                <button type="submit" class="button primary save-button">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'products/inventory.js' %}"></script>
+{% endblock %}

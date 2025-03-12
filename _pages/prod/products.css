@@ -1,378 +1,381 @@
 /* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar (Same as Dashboard) */
+.sidebar {
+  width: 250px;
+  background-color: #343a40;
+  color: white;
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.main-content .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.main-content .header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Add Product Button */
+.button.primary {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button.primary:hover {
+  background-color: #0056b3;
+}
+
+/* Products Grid */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 20px;
+}
+
+/* Product Card */
+.product-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .product-image {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.product-card .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card .product-info {
+  padding: 15px;
+  flex: 1;
+  position: relative;
+}
+
+.product-card .product-info h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.product-card .product-info .tags {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.product-card .product-info .tag {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.product-card .product-info .tag.category {
+  background-color: #28a745;
+  color: white;
+}
+
+.product-card .product-info .tag.brand {
+  background-color: #007bff;
+  color: white;
+}
+
+.product-card .product-info .unit-price {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-card .product-actions {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+
+.product-card .product-actions .button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-card .product-actions .button.success {
+  background-color: #28a745;
+  color: white;
+}
+
+.product-card .product-actions .button.danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.product-card .product-actions .button.success:hover {
+  background-color: #218838;
+}
+
+.product-card .product-actions .button.danger:hover {
+  background-color: #c82333;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+/* Modal */
+.modal {
+  background-color: white;
+  border-radius: 15px;
+  padding: 25px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Sidebar (Same as Dashboard) */
-  .sidebar {
-    width: 250px;
-    background-color: #343a40;
-    color: white;
-    height: 100vh;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-  }
-  
-  /* Main Content */
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 250px;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  
-  .main-content .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .main-content .header h1 {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  /* Add Product Button */
-  .button.primary {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .button.primary:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Products Grid */
+}
+
+.modal .close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.modal .close-button:hover {
+  color: #007bff;
+}
+
+/* Form and Image Container */
+.form-image-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* Form */
+#addProductForm,
+#editProductForm {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Product Image Container */
+.product-image-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-image-container .product-image img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.product-image-container #addUploadImageButton,
+.product-image-container #editUploadImageButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-image-container #addUploadImageButton:hover,
+.product-image-container #editUploadImageButton:hover {
+  background-color: #5a6268;
+}
+
+/* Delete Modal */
+.modal h2,
+.modal p,
+.modal-actions {
+  text-align: center;
+}
+
+.modal p {
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-actions .button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-actions .button.danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.modal-actions .button.secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-actions .button.danger:hover {
+  background-color: #c82333;
+}
+
+.modal-actions .button.secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
   }
-  
-  /* Product Card */
-  .product-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .product-card .product-image {
+}
+
+@media (max-width: 768px) {
+  .sidebar {
     width: 100%;
-    height: 150px;
-    overflow: hidden;
-  }
-  
-  .product-card .product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .product-card .product-info {
-    padding: 15px;
-    flex: 1;
+    height: auto;
     position: relative;
   }
-  
-  .product-card .product-info h3 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
+
+  .main-content {
+    margin-left: 0;
   }
-  
-  .product-card .product-info .tags {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .product-card .product-info .tag {
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  .product-card .product-info .tag.category {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .product-card .product-info .tag.brand {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .product-card .product-info .unit-price {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .product-card .product-actions {
-    display: flex;
-    gap: 10px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #eee;
-  }
-  
-  .product-card .product-actions .button {
-    flex: 1;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .product-card .product-actions .button.success {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .product-card .product-actions .button.danger {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .product-card .product-actions .button.success:hover {
-    background-color: #218838;
-  }
-  
-  .product-card .product-actions .button.danger:hover {
-    background-color: #c82333;
-  }
-  
-  /* Modal Overlay */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-overlay.active {
-    display: flex;
-  }
-  
-  /* Modal */
-  .modal {
-    background-color: white;
-    border-radius: 15px;
-    padding: 25px;
-    width: 90%;
-    max-width: 600px;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .modal .close-button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #666;
-    transition: color 0.3s;
-  }
-  
-  .modal .close-button:hover {
-    color: #007bff;
-  }
-  
-  /* Form and Image Container */
-  .form-image-container {
-    display: flex;
-    gap: 20px;
-  }
-  
-  /* Form */
-  #productForm {
-    flex: 1;
-  }
-  
-  #productForm .form-group {
-    margin-bottom: 15px;
-  }
-  
-  #productForm .form-group label {
-    display: block;
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
-  }
-  
-  #productForm .form-group input,
-  #productForm .form-group select,
-  #productForm .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-  }
-  
-  #productForm .form-group input:focus,
-  #productForm .form-group select:focus,
-  #productForm .form-group textarea:focus {
-    border-color: #007bff;
-  }
-  
-  #productForm .form-group textarea {
-    resize: vertical;
-  }
-  
-  /* Product Image Container */
-  .product-image-container {
-    flex: 1;
-    display: flex;
+
+  .header {
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    align-items: flex-start;
   }
-  
-  .product-image-container .product-image img {
-    width: 100%;
-    max-height: 200px;
-    object-fit: contain;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+
+  .products-grid {
+    grid-template-columns: 1fr; /* 1 card per row on mobile */
   }
-  
-  .product-image-container #uploadImageButton {
-    width: 100%;
-    padding: 10px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .product-image-container #uploadImageButton:hover {
-    background-color: #5a6268;
-  }
-  
-  /* Delete Modal */
-  .modal h2,
-  .modal p,
-  .modal-actions {
-    text-align: center;
-  }
-  
-  .modal p {
-    margin-bottom: 20px;
-  }
-  
-  .modal-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-  
-  .modal-actions .button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .modal-actions .button.danger {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .modal-actions .button.secondary {
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  .modal-actions .button.danger:hover {
-    background-color: #c82333;
-  }
-  
-  .modal-actions .button.secondary:hover {
-    background-color: #5a6268;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .products-grid {
-      grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-    }
-  
-    .main-content {
-      margin-left: 0;
-    }
-  
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .products-grid {
-      grid-template-columns: 1fr; /* 1 card per row on mobile */
-    }
-  }
+}

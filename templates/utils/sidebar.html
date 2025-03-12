@@ -4,7 +4,8 @@
     </div>
     <nav>
         <a href="dashboard.html" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Dashboard</a>
-        <a href="products.html" {% if active == 'products' %}class="active"{% endif %}>📦 Products</a>
+        <a href="{% url 'products_list' %}" {% if active == 'products' %}class="active"{% endif %}>📦 Products</a>
+        <a href="{% url 'inventory' %}" {% if active == 'inventory' %}class="active"{% endif %}>📋 Inventory</a>
         <a href="sales.html" {% if active == 'sales' %}class="active"{% endif %}>💰 Sales</a>
 
         <!-- Manager Only Links -->

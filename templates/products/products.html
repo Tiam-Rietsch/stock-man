@@ -21,94 +21,138 @@
 
     <!-- Products Grid -->
     <div class="products-grid">
-      <!-- Product Cards -->
-      <div class="product-card" data-product='{"name":"Router","brand":"C","category":"E","quantity":50,"unitPrice":100,"image":"router.jpg","sid":"12345","description":"A high-performance router"}'>
-        <div class="product-image">
-          <img src="router.jpg" alt="Router">
-        </div>
-        <div class="product-info">
-          <h3>Router</h3>
-          <div class="tags">
-            <span class="tag category">Electronics</span>
-            <span class="tag brand">Cisco</span>
-          </div>
-          <p class="unit-price">$100</p>
-        </div>
-        <div class="product-actions">
-          <button class="button success edit-product">Edit</button>
-          <button class="button danger delete-product">Delete</button>
-        </div>
-      </div>
 
-      <div class="product-card" data-product='{"name":"Switch","brand":"H","category":"E","quantity":30,"unitPrice":80,"image":"switch.jpg","sid":"67890","description":"A reliable network switch"}'>
+      {% for product in products %}
+      <!-- Product Cards -->
+      <div class="product-card" data-product='{"name":"{{ product.name }}","brand":"{{ product.brand }}","category":"{{product.category }}","quantity":{{ product.quantity }},"unitPrice":{{ product.unit_price }},"image":"{{ product.image.url }}","sid":"{{ product.sid }}","description":"{{ product.description }}"}'>
         <div class="product-image">
-          <img src="switch.jpg" alt="Switch">
+          <img src="{{ product.image.url }}" alt="Router">
         </div>
         <div class="product-info">
-          <h3>Switch</h3>
+          <h3>{{ product.name }}</h3>
           <div class="tags">
-            <span class="tag category">Electronics</span>
-            <span class="tag brand">Huawei</span>
+            <span class="tag category">{{ product.get_category_display }}</span>
+            <span class="tag brand">{{ product.get_brand_display }}</span>
           </div>
-          <p class="unit-price">$80</p>
+          <p class="unit-price">{{ product.unit_price }} XAF</p>
         </div>
         <div class="product-actions">
-          <button class="button success edit-product">Edit</button>
-          <button class="button danger delete-product">Delete</button>
+          <button class="button success edit-product" edit-url="{% url 'edit_product' product.id %}">Edit</button>
+          <button class="button danger delete-product" delete-url="{% url 'delete_product' product.id %}">Delete</button>
         </div>
       </div>
-      <!-- Add more product cards as needed -->
+      {% endfor %}
+
     </div>
   </div>
 
-  <!-- Add/Edit Product Modal -->
-  <div class="modal-overlay" id="productModalOverlay">
+  <!-- Add Product Modal -->
+  <div class="modal-overlay" id="addModalOverlay">
     <div class="modal">
-      <button class="close-button" id="closeProductModal">&times;</button>
-      <h2 id="modalTitle">Add Product</h2>
+      <button class="close-button" id="closeAddModal">&times;</button>
+      <h2>Add Product</h2>
       <div class="form-image-container">
         <!-- Form -->
-        <form id="productForm">
+        <form enctype="multipart/form-data" id="addProductForm" method="POST" action="{% url 'add_product' %}">
+          {% csrf_token %}
           <div class="form-group">
-            <label for="productName">Product Name</label>
-            <input type="text" id="productName" required>
+            <label for="addProductName">Product Name</label>
+            <input type="text" id="addProductName" name="name" required>
           </div>
           <div class="form-group">
-            <label for="brand">Brand</label>
-            <select id="brand" required>
-              <option value="C">Cisco</option>
-              <option value="H">Huawei</option>
+            <label for="addBrand">Brand</label>
+            <select id="addBrand" name="brand" required>
+              {% for brand in brands %}
+              <option value="{{ brand.0 }}">{{ brand.1 }}</option>
+              {% endfor %}
             </select>
           </div>
           <div class="form-group">
-            <label for="category">Category</label>
-            <select id="category" required>
-              <option value="E">Electronics</option>
-              <option value="N">Networking</option>
+            <label for="addCategory">Category</label>
+            <select id="addCategory" name="category" required>
+              {% for category in categories %}
+              <option value="{{ category.0 }}">{{ category.1 }}</option>
+              {% endfor %}
             </select>
           </div>
           <div class="form-group">
-            <label for="sid">SID</label>
-            <input type="text" id="sid" required>
+            <label for="addSid">SID</label>
+            <input type="text" id="addSid" name="sid" required>
           </div>
           <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" rows="4" required></textarea>
+            <label for="addDescription">Description</label>
+            <textarea id="addDescription" name="description" rows="4" required></textarea>
           </div>
           <div class="form-group">
-            <label for="unitPrice">Unit Price</label>
-            <input type="number" id="unitPrice" required>
+            <label for="addUnitPrice">Unit Price</label>
+            <input type="number" id="addUnitPrice" name="unit_price" required>
           </div>
+          <input type="file" id="addUploadImage" accept="image/*" name="image" style="display: none;">
           <button type="submit" class="button primary save-button">Save</button>
         </form>
 
         <!-- Product Image -->
         <div class="product-image-container">
           <div class="product-image">
-            <img id="productImage" src="placeholder.jpg" alt="Product Image">
+            <img id="addProductImage" src="placeholder.jpg" alt="Product Image">
           </div>
-          <input type="file" id="uploadImage" accept="image/*" style="display: none;">
-          <button class="button secondary" id="uploadImageButton">Upload Image</button>
+          <button class="button secondary" id="addUploadImageButton">Upload Image</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Product Modal -->
+  <div class="modal-overlay" id="editModalOverlay">
+    <div class="modal">
+      <button class="close-button" id="closeEditModal">&times;</button>
+      <h2>Edit Product</h2>
+      <div class="form-image-container">
+        <!-- Form -->
+        <form enctype="multipart/form-data" id="editProductForm" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="editProductName">Product Name</label>
+            <input type="text" id="editProductName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="editBrand">Brand</label>
+            <select id="editBrand" name="brand" required>
+              {% for brand in brands %}
+              <option value="{{ brand.0 }}">{{ brand.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editCategory">Category</label>
+            <select id="editCategory" name="category" required>
+              {% for category in categories %}
+              <option value="{{ category.0 }}">{{ category.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editSid">SID</label>
+            <input type="text" id="editSid" name="sid" required>
+          </div>
+          <div class="form-group">
+            <label for="editDescription">Description</label>
+            <textarea id="editDescription" rows="4" name="description" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="editUnitPrice">Unit Price</label>
+            <input type="number" id="editUnitPrice" name="unit_price" required>
+          </div>
+          <input type="file" id="editUploadImage" accept="image/*" name="image" style="display: none;">
+          <button type="submit" class="button primary save-button">Save</button>
+        </form>
+
+        <!-- Product Image -->
+        <div class="product-image-container">
+          <div class="product-image">
+            <img id="editProductImage" src="placeholder.jpg" alt="Product Image">
+          </div>
+          <button class="button secondary" id="editUploadImageButton">Upload Image</button>
         </div>
       </div>
     </div>
@@ -116,15 +160,16 @@
 
   <!-- Delete Modal -->
   <div class="modal-overlay" id="deleteModalOverlay">
-    <div class="modal">
+    <form class="modal" id="deleteProductForm" method="POST">
+      {% csrf_token %}
       <button class="close-button" id="closeDeleteModal">&times;</button>
       <h2>Delete Product</h2>
       <p>Are you sure you want to delete this product?</p>
       <div class="modal-actions">
-        <button class="button danger" id="confirmDelete">Delete</button>
-        <button class="button secondary" id="cancelDelete">Cancel</button>
+        <button type="submit" class="button danger" id="confirmDelete">Delete</button>
+        <button type="button" class="button secondary" id="cancelDelete">Cancel</button>
       </div>
-    </div>
+    </form>
   </div>
 {% endblock %}
 
