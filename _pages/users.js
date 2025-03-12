@@ -1,28 +1,12 @@
 // Get references to modals and buttons
-const addUserButton = document.getElementById("addUserButton");
-const userModalOverlay = document.getElementById("userModalOverlay");
-const closeUserModal = document.getElementById("closeUserModal");
 const deleteModalOverlay = document.getElementById("deleteModalOverlay");
 const closeDeleteModal = document.getElementById("closeDeleteModal");
 const confirmDelete = document.getElementById("confirmDelete");
 const cancelDelete = document.getElementById("cancelDelete");
+const searchInput = document.getElementById("searchInput");
 
-// Variables to track current action and user
+// Variables to track current user row
 let currentUserRow = null;
-
-// Add User Button
-addUserButton.addEventListener("click", () => {
-  userModalOverlay.classList.add("active");
-});
-
-// Edit User Buttons
-document.querySelectorAll(".edit-user").forEach((button) => {
-  button.addEventListener("click", (e) => {
-    e.stopPropagation();
-    currentUserRow = e.target.closest("tr");
-    userModalOverlay.classList.add("active");
-  });
-});
 
 // Delete User Buttons
 document.querySelectorAll(".delete-user").forEach((button) => {
@@ -33,11 +17,34 @@ document.querySelectorAll(".delete-user").forEach((button) => {
   });
 });
 
-// Close Modals
-closeUserModal.addEventListener("click", () => {
-  userModalOverlay.classList.remove("active");
+// Activate/Deactivate User Buttons
+document.querySelectorAll(".activate, .deactivate").forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const userRow = e.target.closest("tr");
+    const activationStatus = userRow.querySelector(".activation-status");
+
+    if (activationStatus.classList.contains("pending")) {
+      // Activate the user
+      activationStatus.innerHTML = `<i class="fas fa-check-circle"></i> DONE`;
+      activationStatus.classList.remove("pending");
+      activationStatus.classList.add("done");
+      e.target.textContent = "Deactivate";
+      e.target.classList.remove("activate");
+      e.target.classList.add("deactivate");
+    } else {
+      // Deactivate the user
+      activationStatus.innerHTML = `<i class="fas fa-clock"></i> PENDING`;
+      activationStatus.classList.remove("done");
+      activationStatus.classList.add("pending");
+      e.target.textContent = "Activate";
+      e.target.classList.remove("deactivate");
+      e.target.classList.add("activate");
+    }
+  });
 });
 
+// Close Modals
 closeDeleteModal.addEventListener("click", () => {
   deleteModalOverlay.classList.remove("active");
 });
@@ -49,8 +56,25 @@ cancelDelete.addEventListener("click", () => {
 // Confirm Delete
 confirmDelete.addEventListener("click", () => {
   if (currentUserRow) {
-    // Send a request to Django to delete the user
-    // Django will handle the actual deletion and page reload
+    // Remove the user row from the DOM
+    currentUserRow.remove();
     deleteModalOverlay.classList.remove("active");
   }
+});
+
+// Search Functionality
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  const rows = document.querySelectorAll(".users-table tbody tr");
+
+  rows.forEach((row) => {
+    const name = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+    const email = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+
+    if (name.includes(searchTerm) || email.includes(searchTerm)) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
 });

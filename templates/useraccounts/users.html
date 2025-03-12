@@ -1,0 +1,78 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Users - Stock Management{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'useraccounts/users.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+{% include '../utils/sidebar.html' with active='users' %}
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="header">
+        <h1>Users</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search users...">
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="users-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Activation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr data-user='{"name":"{{ user.name }}","email":"{{ user.email }}","role":"{{ user.get_role_display }}","activation":"{{ user.is_active }}"}'>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.get_role_display }}</td>
+                    <td>
+                        <span {% if user.is_active %} class="activation-status done" {% else %} class="activation-status pending" {% endif %}>
+                           {{ user.is_active }}
+                        </span>
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'toggle_activate_user' user.id %}">
+                            <button class="button danger delete-user" delete-url="{% url 'delete_user' user.id %}">Delete</button>
+                            <button  type="submit" {% if user.is_active %}class="button deactivate"{% else %}class="button activate"{% endif %} >{% if user.is_active %}deactivate{% else %}activate{% endif %}</button>    
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Delete User Modal -->
+<div class="modal-overlay" id="deleteModalOverlay">
+    <div class="modal">
+        <button class="close-button" id="closeDeleteModal">&times;</button>
+        <h2>Delete User</h2>
+        <p>Are you sure you want to delete this user?</p>
+        <div class="modal-actions">
+            <button class="button danger" id="confirmDelete">Delete</button>
+            <button class="button secondary" id="cancelDelete">Cancel</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'useraccounts/users.js' %}"></script>
+{% endblock %}

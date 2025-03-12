@@ -88,8 +88,9 @@ def inventory_view(request):
 @login_required(login_url='login')
 def stock_update_view(request, id):
     if request.method == 'POST':
-        quantity = request.POST['quantity']
-        supplied = bool(request.GET['supplied'])
+        quantity = int(request.POST['quantity'])
+        supplied = bool(request.GET['supplied'] == 'true')
+
         product = Product.objects.get(pk=id)
 
         product.quantity = product.quantity + quantity if supplied else quantity

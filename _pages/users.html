@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Users - Stock Management</title>
   <link rel="stylesheet" href="users.css">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
   <div class="sidebar">
     <!-- Sidebar content (same as dashboard) -->
@@ -15,7 +15,9 @@
   <div class="main-content">
     <div class="header">
       <h1>Users</h1>
-      <button class="button primary" id="addUserButton">Add User</button>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search users...">
+      </div>
     </div>
 
     <!-- Users Table -->
@@ -26,57 +28,42 @@
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Activation</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr data-user='{"name":"John Doe","email":"john@example.com","role":"Manager"}'>
+          <tr data-user='{"name":"John Doe","email":"john@example.com","role":"Manager","activation":"DONE"}'>
             <td>John Doe</td>
             <td>john@example.com</td>
             <td>Manager</td>
             <td>
-              <button class="button success edit-user">Edit</button>
+              <span class="activation-status done">
+                <i class="fas fa-check-circle"></i> DONE
+              </span>
+            </td>
+            <td>
               <button class="button danger delete-user">Delete</button>
+              <button class="button deactivate">Deactivate</button>
             </td>
           </tr>
-          <tr data-user='{"name":"Jane Smith","email":"jane@example.com","role":"Worker"}'>
+          <tr data-user='{"name":"Jane Smith","email":"jane@example.com","role":"Worker","activation":"PENDING"}'>
             <td>Jane Smith</td>
             <td>jane@example.com</td>
             <td>Worker</td>
             <td>
-              <button class="button success edit-user">Edit</button>
+              <span class="activation-status pending">
+                <i class="fas fa-clock"></i> PENDING
+              </span>
+            </td>
+            <td>
               <button class="button danger delete-user">Delete</button>
+              <button class="button activate">Activate</button>
             </td>
           </tr>
           <!-- Add more rows as needed -->
         </tbody>
       </table>
-    </div>
-  </div>
-
-  <!-- Add/Edit User Modal -->
-  <div class="modal-overlay" id="userModalOverlay">
-    <div class="modal">
-      <button class="close-button" id="closeUserModal">&times;</button>
-      <h2 id="modalTitle">Add User</h2>
-      <form id="userForm">
-        <div class="form-group">
-          <label for="userName">Name</label>
-          <input type="text" id="userName" required>
-        </div>
-        <div class="form-group">
-          <label for="userEmail">Email</label>
-          <input type="email" id="userEmail" required>
-        </div>
-        <div class="form-group">
-          <label for="userRole">Role</label>
-          <select id="userRole" required>
-            <option value="Manager">Manager</option>
-            <option value="Worker">Worker</option>
-          </select>
-        </div>
-        <button type="submit" class="button primary">Save</button>
-      </form>
     </div>
   </div>
 
@@ -95,5 +82,4 @@
 
   <script src="users.js"></script>
 </body>
-
 </html>
