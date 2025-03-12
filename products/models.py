@@ -19,7 +19,7 @@ class Product(models.Model):
     quantity = models.IntegerField(default=0)
     sid = models.CharField(max_length=255)
     description = models.TextField()
-    unit_price = models.IntegerField()
+    unit_price = models.FloatField()
     image = models.ImageField(upload_to='products/')
 
     def __str__(self):

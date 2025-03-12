@@ -16,7 +16,7 @@
 <div class="main-content">
     <div class="header">
       <h1>Products</h1>
-      <button class="button primary" id="addProductButton">Add Product</button>
+      <button class="button primary" id="addProductButton" {% if user.role == 'W' %}hidden{% endif %}>Add Product</button>
     </div>
 
     <!-- Products Grid -->
@@ -37,8 +37,8 @@
           <p class="unit-price">{{ product.unit_price }} XAF</p>
         </div>
         <div class="product-actions">
-          <button class="button success edit-product" edit-url="{% url 'edit_product' product.id %}">Edit</button>
-          <button class="button danger delete-product" delete-url="{% url 'delete_product' product.id %}">Delete</button>
+          <button class="button success edit-product" edit-url="{% url 'edit_product' product.id %}">{% if user.role == 'W' %}View{%else%}View and Edit{% endif %}</button>
+          <button class="button danger delete-product" delete-url="{% url 'delete_product' product.id %}" {% if user.role == 'W' %}hidden{% endif %}>Delete</button>
         </div>
       </div>
       {% endfor %}
@@ -88,7 +88,7 @@
             <input type="number" id="addUnitPrice" name="unit_price" required>
           </div>
           <input type="file" id="addUploadImage" accept="image/*" name="image" style="display: none;">
-          <button type="submit" class="button primary save-button">Save</button>
+          <button type="submit" class="button primary save-button" {% if user.role == 'W' %}hidden{% endif %}>Save</button>
         </form>
 
         <!-- Product Image -->
@@ -96,7 +96,7 @@
           <div class="product-image">
             <img id="addProductImage" src="placeholder.jpg" alt="Product Image">
           </div>
-          <button class="button secondary" id="addUploadImageButton">Upload Image</button>
+          <button class="button secondary" id="addUploadImageButton" {% if user.role == 'W' %}hidden{% endif %}>Upload Image</button>
         </div>
       </div>
     </div>
@@ -144,7 +144,7 @@
             <input type="number" id="editUnitPrice" name="unit_price" required>
           </div>
           <input type="file" id="editUploadImage" accept="image/*" name="image" style="display: none;">
-          <button type="submit" class="button primary save-button">Save</button>
+          <button type="submit" class="button primary save-button" {% if user.role == 'W' %}hidden{% endif %}>Save</button>
         </form>
 
         <!-- Product Image -->
@@ -152,7 +152,7 @@
           <div class="product-image">
             <img id="editProductImage" src="placeholder.jpg" alt="Product Image">
           </div>
-          <button class="button secondary" id="editUploadImageButton">Upload Image</button>
+          <button class="button secondary" id="editUploadImageButton" {% if user.role == 'W' %}hidden{% endif %}>Upload Image</button>
         </div>
       </div>
     </div>

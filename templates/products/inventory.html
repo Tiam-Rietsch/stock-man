@@ -45,7 +45,7 @@
                     <td>{{ product.quantity }}</td>
                     <td>
                         <button class="button success add-quantity" stock-add-url="{% url 'stock_update' product.id %}?supplied=true">Add</button>
-                        <button class="button primary edit-quantity" stock-edit-url="{% url 'stock_update' product.id %}?supplied=false">Edit</button>
+                        <button class="button primary edit-quantity" stock-edit-url="{% url 'stock_update' product.id %}?supplied=false" {% if user.role == 'W' %}hidden{% endif %}>Edit</button>
                     </td>
                 </tr>
                 {% endfor %}

@@ -3,14 +3,16 @@
         <img src="logo.png" alt="Stock Management Logo">
     </div>
     <nav>
-        <a href="dashboard.html" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Dashboard</a>
         <a href="{% url 'products_list' %}" {% if active == 'products' %}class="active"{% endif %}>📦 Products</a>
         <a href="{% url 'inventory' %}" {% if active == 'inventory' %}class="active"{% endif %}>📋 Inventory</a>
-        <a href="sales.html" {% if active == 'sales' %}class="active"{% endif %}>💰 Sales</a>
+        <a href="{% url 'sales_list' %}" {% if active == 'sales' %}class="active"{% endif %}>💰 Sales</a>
 
         <!-- Manager Only Links -->
+        {% if user.role == 'M' %}
+        <a href="dashboard.html" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Dashboard</a>
         <a href="reports.html" {% if active == 'reports' %}class="active"{% endif %}>📈 Reports</a>
         <a href="{% url 'user_list' %}" {% if active == 'users' %}class="active"{% endif %}>👥 Users</a>
+        {% endif %}
     </nav>
     <div class="user-profile">
         <p>{{ user.name|capfirst }}</p>

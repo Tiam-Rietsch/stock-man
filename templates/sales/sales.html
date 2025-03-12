@@ -1,0 +1,139 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Sales - Stock Management{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'sales/sales.css' %}">
+<link rel="stylesheet" href="{% static 'sidebar.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+{% include '../utils/sidebar.html' with active='sales' %}
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+  <div class="header">
+    <h1>Sales</h1>
+  </div>
+
+  {% if user.role == 'W' %}
+  <!-- Form and Image Container -->
+  <div class="form-image-container">
+    <!-- Form -->
+    <div class="sales-form">
+      <h2>Record a Sale</h2>
+      <form id="salesForm" method="POST" action="{% url 'add_sale' %}">
+        {% csrf_token %}
+        <div class="form-columns">
+          <!-- Left Column -->
+          <div class="form-column">
+            <!-- Product -->
+            <div class="form-group">
+              <label for="product">Product</label>
+              <select id="product" name="product_id" required>
+                <option value="" disabled selected>Select a product</option>
+                {% for product in products %}
+                <option 
+                  value="{{ product.id }}"
+                  product-data='{"name": "{{product.name}}", "brand": "{{product.get_brand_display}}", "category": "{{product.get_category_display}}", "unit_price": {{product.unit_price}}, "image": "{{product.image.url}}", "quantity":"{{product.quantity}}"}'
+                >
+                  {{ product.name }} - {{ product.get_brand_display }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Brand -->
+            <div class="form-group">
+              <label for="brand">Brand</label>
+              <input id="brand" required readonly>
+            </div>
+
+            <!-- Category (Non-editable) -->
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" id="category"  readonly>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="form-column">
+            <!-- Unit Price (Non-editable) -->
+            <div class="form-group">
+              <label for="unitPrice">Unit Price</label>
+              <input type="number" id="unitPrice" readonly>
+            </div>
+
+            <!-- Quantity -->
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="number" id="quantity" name="quantity" required>
+            </div>
+
+            <!-- Total Price (Computed, Non-editable) -->
+            <div class="form-group">
+              <label for="totalPrice">Total Price</label>
+              <input type="number" name="total_price" id="totalPrice" readonly>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="recordSaleButton" class="button primary">Record Sale</button>
+      </form>
+    </div>
+
+    <!-- Product Image -->
+    <div class="product-image-container">
+      <div class="product-image">
+        <img id="productImage" src="placeholder.jpg" alt="Product Image">
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Sales Table -->
+  <div class="sales-table">
+    <h2>Recent Sales</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Brand</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total Price</th>
+          <th>Date</th>
+          {% if user.role == 'M' %}
+          <th>done by</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for sale in sales %}
+        <tr class="sale-row" data-sale='{"product":"{{ sale.product.name }}","brand":"{{ sale.product.get_brand_display }}","category":"{{ sale.product.get_category_display }}","image":"{{ sale.product.image.url }}","unitPrice":{{ sale.product.unit_price }},"quantity":{{ sale.quantity }},"totalPrice":{{sale.total_price}},"date":"{{ sale.date }}"}'>
+          <td>{{ sale.product.name }}</td>
+          <td>{{ sale.product.get_brand_display }}</td>
+          <td>{{ sale.product.get_category_display }}</td>
+          <td>{{ sale.quantity }}</td>
+          <td>{{ sale.product.unit_price }}</td>
+          <td>{{ sale.total_price }}</td>
+          <td>{{ sale.date }}</td>
+          {% if user.role == 'M' %}
+          <td>{{ sale.done_by.name }}</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'sales/sales.js' %}"></script>
+{% endblock %}
