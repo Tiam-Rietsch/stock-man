@@ -15,7 +15,6 @@
       <a href="dashboard.html" class="active">📊 Dashboard</a>
       <a href="products.html">📦 Products</a>
       <a href="sales.html">💰 Sales</a>
-      
       <!-- Manager Only Links -->
       <a href="reports.html">📈 Reports</a>
       <a href="users.html">👥 Users</a>
@@ -52,7 +51,13 @@
     <div class="charts-grid">
       <!-- Sales Trends -->
       <div class="chart-card">
-        <h3>Sales Trends</h3>
+        <div class="chart-header">
+          <h3>Sales Trends</h3>
+          <div class="toggle-buttons">
+            <button id="yearly-trend" class="active">Year</button>
+            <button id="monthly-trend">Month</button>
+          </div>
+        </div>
         <div class="chart-placeholder line-chart"></div>
       </div>
       <!-- Top Selling Products -->
@@ -75,10 +80,22 @@
             <li>2023-10-01: Added 50 Routers to Inventory</li>
             <li>2023-10-01: Recorded Sale of 5 Switches</li>
             <li>2023-10-01: Updated Stock for Router</li>
+            <li>2023-09-30: Added 20 Cables to Inventory</li>
+            <li>2023-09-30: Recorded Sale of 10 Adapters</li>
+            <li>2023-09-29: Updated Stock for Switch</li>
+            <li>2023-09-28: Added 15 Modems to Inventory</li>
+            <li>2023-09-28: Recorded Sale of 8 Hubs</li>
+            <li>2023-09-27: Updated Stock for Cable</li>
+            <li>2023-09-27: Added 30 Patch Panels to Inventory</li>
           </ul>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Include ApexCharts -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <!-- Include your dashboard.js -->
+  <script src="dashboard.js"></script>
 </body>
 </html>
