@@ -15,7 +15,7 @@
 {% block content %}
 <div class="main-content">
     <div class="header">
-        <h1>Users</h1>
+        <h1>Utilisateurs</h1>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Rechercher un utilisateur...">
         </div>
@@ -47,8 +47,8 @@
                     <td>
                         <form method="POST" action="{% url 'toggle_activate_user' user.id %}">
                             {% csrf_token %}
-                            <button type="button" class="button danger delete-user" delete-url="{% url 'delete_user' user.id %}">Delete</button>
-                            <button  type="submit" {% if user.is_active %}class="button deactivate"{% else %}class="button activate"{% endif %} >{% if user.is_active %}deactivate{% else %}activate{% endif %}</button>    
+                            <button type="button" class="button danger delete-user" delete-url="{% url 'delete_user' user.id %}">Supprimer</button>
+                            <button  type="submit" {% if user.is_active %}class="button deactivate"{% else %}class="button activate"{% endif %} >{% if user.is_active %}desactiver{% else %}activater{% endif %}</button>    
                         </form>
                     </td>
                 </tr>

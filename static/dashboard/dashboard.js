@@ -13,7 +13,7 @@ function populateChartData(data) {
     const yearlyData = {
         series: [
             {
-                name: "Sales",
+                name: "Ventes",
                 // amount of money sold for each month of the current year
                 data: data.yearly_sales,
             },
@@ -37,7 +37,7 @@ function populateChartData(data) {
     const monthlyData = {
         series: [
             {
-                name: "Sales",
+                name: "Ventes",
                 // amount of money sold for each day of the current month
                 data: data.monthly_sales,
             },
@@ -76,7 +76,7 @@ function populateChartData(data) {
         },
         yaxis: {
             title: {
-                text: "Sales ($)",
+                text: "Ventes (FCFA)",
             },
         },
     };
@@ -130,12 +130,12 @@ function populateChartData(data) {
             },
             yaxis: {
                 title: {
-                    text: "Units Sold",
+                    text: "Unite vendu",
                 },
             },
             series: [
                 {
-                    name: "Units Sold",
+                    name: "unite vendu",
                     // quantity sold for each product
                     data: data.top_selling_products.quantities,
                 },
