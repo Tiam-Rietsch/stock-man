@@ -1,7 +1,7 @@
 {% extends '../base.html' %}
 {% load static %}
 
-{% block title %}Dashboard - Stock Management{% endblock %}
+{% block title %}Tableau de bord - Gestion de stock{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'sidebar.css' %}">
@@ -15,7 +15,7 @@
 {% block content %}
 <div class="main-content">
 	<div class="header">
-		<h1>Dashboard</h1>
+		<h1>Tableau de bord</h1>
 	</div>
 
 	<input type="text" id="dataUrl" value="{% url 'dashboard_data' %}" hidden>
@@ -23,49 +23,49 @@
 	<div class="metrics-grid">
 		<!-- Key Metrics -->
 		<div class="metric-card">
-			<h3>Total Stock Value</h3>
+			<h3>Total des stocks</h3>
 			<p>{{ total_stock_value }} FCFA</p>
 		</div>
 		<div class="metric-card">
-			<h3>Total Sales Today</h3>
+			<h3>Ventes du jour</h3>
 			<p>{{ total_day_sales }} FCFA</p>
 		</div>
 		<div class="metric-card">
-			<h3>Low Stock Alerts</h3>
-			<p>{{ low_stock_count }} alerts</p>
+			<h3>Alertes de stock faible</h3>
+			<p>{{ low_stock_count }} alertes</p>
 		</div>
 		<div class="metric-card">
 			<h3>Total Products</h3>
-			<p>{{ total_products_count }} products</p>
+			<p>{{ total_products_count }} produits</p>
 		</div>
 	</div>
 	<div class="charts-grid">
 		<!-- Sales Trends -->
 		<div class="chart-card">
 			<div class="chart-header">
-				<h3>Sales Trends</h3>
+				<h3>Courbe des ventes</h3>
 				<div class="toggle-buttons">
-					<button id="yearly-trend" class="active">Year</button>
-					<button id="monthly-trend">Month</button>
+					<button id="yearly-trend" class="active">Annes</button>
+					<button id="monthly-trend">Mois</button>
 				</div>
 			</div>
 			<div class="chart-placeholder line-chart"></div>
 		</div>
 		<!-- Top Selling Products -->
 		<div class="chart-card">
-			<h3>Top Selling Products</h3>
+			<h3>Produit les plus vendue</h3>
 			<div class="chart-placeholder bar-chart"></div>
 		</div>
 	</div>
 	<div class="bottom-grid">
 		<!-- Inventory Overview -->
 		<div class="chart-card">
-			<h3>Inventory Overview</h3>
+			<h3>Apercu de l'inventaire</h3>
 			<div class="chart-placeholder pie-chart"></div>
 		</div>
 		<!-- Recent Activities -->
 		<div class="chart-card">
-			<h3>Recent Activities</h3>
+			<h3>Activites recentes</h3>
 			<div class="recent-activities">
 				<ul>
 					<li>2023-10-01: Added 50 Routers to Inventory</li>

@@ -3,6 +3,8 @@ from django.db import transaction
 
 from .models import Sale
 from products.models import Product
+from useraccounts.models import User, Roles
+from notifications.models import SaleRecordNotification, LowStockNotification, NotificationTypeChoices
 
 def sales_list_view(request):
     sales = Sale.objects.all() if request.user.role == 'M' else request.user.sales.all()
@@ -31,6 +33,23 @@ def sale_add_view(request):
 
         product.quantity -= sale.quantity
         sale.save()
+
+        notification = SaleRecordNotification.objects.create(sale=sale)
+        for user in User.objects.filter(role=Roles.manager): notification.target.add(user)
+        notification.save()
+
+        stock_notifications = LowStockNotification.objects.filter(product=product, type=NotificationTypeChoices.low_stock)
+        if len(stock_notifications) > 0:
+            for notification in stock_notifications:
+                if product.quantity < product.min_stock:
+                    notification.save()
+                else:
+                    notification.delete()
+        elif product.quantity < product.min_stock:
+            notification = LowStockNotification.objects.create(product=product)
+            for user in User.objects.all(): notification.target.add(user)
+            notification.save()
+
         product.save()
 
         return redirect('sales_list')

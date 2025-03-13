@@ -1,0 +1,31 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Notifications - Stock Management{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'notifications/notifications.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+{% include '../utils/sidebar.html' with active='notifications' %}
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="header">
+        <h1>Notifications</h1>
+    </div>
+    <div class="notifications-grid">
+        <!-- Notification Cards -->
+        {% for notification in notifications %}
+        <div class="notification-card {{ notification.get_status_display }}">
+            <h3>{{ notification.get_type_display }}</h3>
+            <p>{{ notification.body }}</p>
+            <p class="timestamp">il y as {{ notification.date|timesince }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

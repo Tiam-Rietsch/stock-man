@@ -3,15 +3,15 @@
         <img src="logo.png" alt="Stock Management Logo">
     </div>
     <nav>
-        <a href="{% url 'products_list' %}" {% if active == 'products' %}class="active"{% endif %}>📦 Products</a>
-        <a href="{% url 'inventory' %}" {% if active == 'inventory' %}class="active"{% endif %}>📋 Inventory</a>
-        <a href="{% url 'sales_list' %}" {% if active == 'sales' %}class="active"{% endif %}>💰 Sales</a>
+        <a href="{% url 'products_list' %}" {% if active == 'products' %}class="active"{% endif %}>📦 Produits</a>
+        <a href="{% url 'inventory' %}" {% if active == 'inventory' %}class="active"{% endif %}>📋 Inventaire</a>
+        <a href="{% url 'sales_list' %}" {% if active == 'sales' %}class="active"{% endif %}>💰 Ventes</a>
+        <a href="{% url 'notifications' %}"  {% if active == 'notifications' %}class="active"{% endif %}>🔔 Notifications</a>
 
         <!-- Manager Only Links -->
         {% if user.role == 'M' %}
-        <a href="{% url 'dashboard' %}" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Dashboard</a>
-        <a href="reports.html" {% if active == 'reports' %}class="active"{% endif %}>📈 Reports</a>
-        <a href="{% url 'user_list' %}" {% if active == 'users' %}class="active"{% endif %}>👥 Users</a>
+        <a href="{% url 'dashboard' %}" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Tableaux de bord</a>
+        <a href="{% url 'user_list' %}" {% if active == 'users' %}class="active"{% endif %}>👥 Utilisateurs</a>
         {% endif %}
     </nav>
     <div class="user-profile">
@@ -19,7 +19,7 @@
         <p class="role">{{ user.get_role_display }}</p>
         <form action="{% url 'logout' %}" method="POST">
             {% csrf_token %}
-            <button class="logout-button" type="submit">Logout</button>
+            <button class="logout-button" type="submit">Deconnexion</button>
         </form>
     </div>
 </div>

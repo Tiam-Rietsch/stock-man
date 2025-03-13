@@ -1,7 +1,7 @@
 {% extends '../base.html' %}
 {% load static %}
 
-{% block title %}Users - Stock Management{% endblock %}
+{% block title %}Utilisateurs - Gestion de stock{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'sidebar.css' %}">
@@ -17,7 +17,7 @@
     <div class="header">
         <h1>Users</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search users...">
+            <input type="text" id="searchInput" placeholder="Rechercher un utilisateur...">
         </div>
     </div>
 
@@ -26,10 +26,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Nom</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Activation</th>
+                    <th>Active</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -63,12 +63,12 @@
 <div class="modal-overlay" id="deleteModalOverlay">
     <div class="modal">
         <button class="close-button" id="closeDeleteModal">&times;</button>
-        <h2>Delete User</h2>
-        <p>Are you sure you want to delete this user?</p>
+        <h2>Supprimer un utilisateur</h2>
+        <p>Voulez vous supprimer cet utilisateur definitivement ?</p>
         <form class="modal-actions" id="deleteUserForm" method="POST">
             {% csrf_token %}
-            <button type="submit" class="button danger" id="confirmDelete">Delete</button>
-            <button class="button secondary" id="cancelDelete">Cancel</button>
+            <button type="submit" class="button danger" id="confirmDelete">Supprimer</button>
+            <button class="button secondary" id="cancelDelete">Annuler</button>
         </form>
     </div>
 </div>

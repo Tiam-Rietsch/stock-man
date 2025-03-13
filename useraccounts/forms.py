@@ -8,11 +8,11 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ['email', 'name', 'phone_number', 'password1', 'password2']
         widgets = {
-            'email': forms.EmailInput(attrs={'id': 'email', 'placeholder':'Enter your email'}),
-            'name': forms.TextInput(attrs={'id': 'name', 'placeholder': 'Enter your name'}),
-            'phone_number': forms.TextInput(attrs={'id': 'phone', 'placeholder': 'Enter your phone number'}),
-            'password1': forms.PasswordInput(attrs={'id': 'password', 'placeholder': 'Enter your password'}),
-            'password2': forms.PasswordInput(attrs={'id': 'repeatPassword', 'placeholder': 'Repeat your password'})
+            'email': forms.EmailInput(attrs={'id': 'Email', 'placeholder':'Entrez votre email'}),
+            'name': forms.TextInput(attrs={'id': 'Nome', 'placeholder': 'Entrez votre nom, ex: Jean Paul'}),
+            'phone_number': forms.TextInput(attrs={'id': 'Contact', 'placeholder': 'Entrez votre numeros de telephone'}),
+            'password1': forms.PasswordInput(attrs={'id': 'Mot de passe', 'placeholder': 'Entrez votre mot de passe'}),
+            'password2': forms.PasswordInput(attrs={'id': 'Confirmer', 'placeholder': 'Confirmez votre mot the passe'})
         }
 
 
@@ -21,6 +21,6 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ['email', 'password']
         widgets = {
-            'email': forms.EmailInput(attrs={'id': 'email', 'placeholder': 'Enter your email'}),
-            'password': forms.PasswordInput(attrs={'id': 'password', 'placeholder': 'Enter your password'})
+            'email': forms.EmailInput(attrs={'id': 'email', 'placeholder': 'Entrez votre email'}),
+            'password': forms.PasswordInput(attrs={'id': 'password', 'placeholder': 'Entrez votre mot de passe'})
         }

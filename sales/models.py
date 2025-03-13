@@ -13,4 +13,4 @@ class Sale(models.Model):
     total_price = models.FloatField(default=0)
 
     def __str__(self):
-        return f'{self.date} | {self.quantity} {self.product.name} by {self.done_by.name}'
+        return f'{self.date} | {self.quantity} {self.product.name} by {self.done_by}'

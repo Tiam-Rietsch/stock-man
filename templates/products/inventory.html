@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block ttile %}Stock Management - Inventory{% endblock %}
+{% block ttile %}Inventaire - Gestion de stock{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'sidebar.css' %}">
@@ -16,10 +16,10 @@
 {% block content %}
 <div class="main-content">
     <div class="header">
-        <h1>Inventory</h1>
+        <h1>Inventaire</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search products...">
-            <button class="button primary" id="searchButton">Search</button>
+            <input type="text" id="searchInput" placeholder="Rechercher un produit...">
+            <button class="button primary" id="searchButton">Recherche</button>
         </div>
     </div>
 
@@ -28,10 +28,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>Product Name</th>
-                    <th>Brand</th>
-                    <th>Category</th>
-                    <th>Quantity in Stock</th>
+                    <th>Nom Produit</th>
+                    <th>Marque</th>
+                    <th>Categorie</th>
+                    <th>Quantite en stock</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -44,7 +44,7 @@
                     <td>{{ product.get_category_display }}</td>
                     <td>{{ product.quantity }}</td>
                     <td>
-                        <button class="button success add-quantity" stock-add-url="{% url 'stock_update' product.id %}?supplied=true">Add</button>
+                        <button class="button success add-quantity" stock-add-url="{% url 'stock_update' product.id %}?supplied=true">Ajouter</button>
                         <button class="button primary edit-quantity" stock-edit-url="{% url 'stock_update' product.id %}?supplied=false" {% if user.role == 'W' %}hidden{% endif %}>Edit</button>
                     </td>
                 </tr>
@@ -59,7 +59,7 @@
 <div class="modal-overlay" id="addModalOverlay">
     <div class="modal">
         <button class="close-button" id="closeAddModal">&times;</button>
-        <h2>Add Quantity Supplied</h2>
+        <h2>Ajouter une quantite en stock</h2>
         <div class="form-image-container">
             <!-- Product Image -->
             <div class="product-image-container">
@@ -72,22 +72,22 @@
             <form id="addQuantityForm" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="addProductName">Product Name</label>
+                    <label for="addProductName">Nom Produit</label>
                     <input type="text" id="addProductName" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="addBrand">Brand</label>
+                    <label for="addBrand">Marque</label>
                     <input type="text" id="addBrand" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="addCategory">Category</label>
+                    <label for="addCategory">Categorie</label>
                     <input type="text" id="addCategory" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="quantitySupplied">Quantity Supplied</label>
+                    <label for="quantitySupplied">Quantite a ajouter</label>
                     <input type="number" id="quantitySupplied" name="quantity" required>
                 </div>
-                <button type="submit" class="button primary save-button">Save</button>
+                <button type="submit" class="button primary save-button">Sauvegarder</button>
             </form>
         </div>
     </div>
@@ -97,7 +97,7 @@
 <div class="modal-overlay" id="editModalOverlay">
     <div class="modal">
         <button class="close-button" id="closeEditModal">&times;</button>
-        <h2>Edit Quantity in Stock</h2>
+        <h2>Modifier le stock</h2>
         <div class="form-image-container">
             <!-- Product Image -->
             <div class="product-image-container">
@@ -110,22 +110,22 @@
             <form id="editQuantityForm" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="editProductName">Product Name</label>
+                    <label for="editProductName">Nom Produit</label>
                     <input type="text" id="editProductName" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editBrand">Brand</label>
+                    <label for="editBrand">Marque</label>
                     <input type="text" id="editBrand" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editCategory">Category</label>
+                    <label for="editCategory">Categorie</label>
                     <input type="text" id="editCategory" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editQuantity">Quantity in Stock</label>
+                    <label for="editQuantity">Nouvelle quantite</label>
                     <input type="number" id="editQuantity" name="quantity" required>
                 </div>
-                <button type="submit" class="button primary save-button">Save</button>
+                <button type="submit" class="button primary save-button">Sauvegarder</button>
             </form>
         </div>
     </div>

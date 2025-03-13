@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Product, ProductCategory, ProductBrands
-
+from notifications.models import InventoryUpdateNotification, LowStockNotification, NotificationTypeChoices
+from useraccounts.models import Roles, User
 
 @login_required(login_url='login')
 def products_list_view(request):
@@ -41,6 +42,10 @@ def product_add_view(request):
             min_stock=min_stock
         )
         product.save()
+
+        notification = InventoryUpdateNotification.objects.create(product=product)
+        for user in User.objects.filter(role=Roles.manager): notification.target.add(user)
+        notification.save()
 
         return redirect('products_list')
 
@@ -99,6 +104,22 @@ def stock_update_view(request, id):
 
         product.quantity = product.quantity + quantity if supplied else quantity
         product.save()
+
+        notification = InventoryUpdateNotification.objects.create(product=product)
+        for user in User.objects.all(): notification.target.add(user)
+        notification.save()
+
+        stock_notifications = LowStockNotification.objects.filter(product=product, type=NotificationTypeChoices.low_stock)
+        if len(stock_notifications) > 0:
+            for notification in stock_notifications:
+                if product.quantity < product.min_stock:
+                    notification.save()
+                else:
+                    notification.delete()
+        elif product.quantity < product.min_stock:
+            notification = LowStockNotification.objects.create(product=product)
+            for user in User.objects.all(): notification.target.add(user)
+            notification.save()
 
         return redirect('inventory')
     

@@ -13,8 +13,8 @@
         <div class="logo">
             <img src="logo.png" alt="Stock Management Logo">
         </div>
-        <h2>Create an Account</h2>
-        <p>Sign up to get started</p>
+        <h2>S'enregistrer</h2>
+        <p>Creez un compte et attendez d'etre admis par un manageur</p>
         <form class="signup-form" method="POST">
             {% csrf_token %}
             {% for field in form %}
@@ -25,10 +25,10 @@
             {% endfor %}
 
             <!-- Submit Button -->
-            <button type="submit" class="button primary">Sign Up</button>
+            <button type="submit" class="button primary">S'enregistrer</button>
         </form>
         <div class="login-link">
-            Already have an account? <a href="{% url 'login' %}">Log in</a>
+            ou alors <a href="{% url 'login' %}">Connectez vous</a>
         </div>
     </div>
 </div>

@@ -4,7 +4,7 @@ from django.contrib.auth.models import UserManager, AbstractBaseUser, Permission
 
 
 class Roles(models.TextChoices):
-    worker = 'W', 'WORKER'
+    worker = 'W', 'EMPLOYEE'
     manager = 'M', 'MANAGER' 
 
 

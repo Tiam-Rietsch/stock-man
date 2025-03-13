@@ -1,7 +1,7 @@
 {% extends '../base.html' %}
 {% load static %}
 
-{% block title %}Login - Stock Management{% endblock %}
+{% block title %}Ce connecter - Gestion de stock{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'useraccounts/login.css' %}">
@@ -13,8 +13,8 @@
       <div class="logo">
         <img src="logo.png" alt="Stock Management Logo">
       </div>
-      <h2>Welcome Back</h2>
-      <p>Sign in to your account</p>
+      <h2>Bienvenue</h2>
+      <p>Connectez vous a votre compte</p>
       <form class="login-form" method="POST">
         {% csrf_token %}
         {% for field in form %}
@@ -24,13 +24,13 @@
         </div>
         {% endfor %}
 
-        <button type="submit" class="login-button">Sign In</button>
+        <button type="submit" class="login-button">Se connecter</button>
       </form>
       <!-- <div class="forgot-password">
         <a href="#">Forgot password?</a>
       </div> -->
       <div class="signup-link">
-        Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+        ou alors <a href="{% url 'signup' %}">S'enregistrer</a>
       </div>
     </div>
   </div>

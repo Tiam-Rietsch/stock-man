@@ -7,8 +7,8 @@ class ProductBrands(models.TextChoices):
 
 
 class ProductCategory(models.TextChoices):
-    electric = 'A', 'ELECTRIC'
-    electronic = 'B', 'ELECTRONIC'
+    electric = 'A', 'ELECTRIQUE'
+    electronic = 'B', 'ELECTRONIQUE'
 
 
 class Product(models.Model):
