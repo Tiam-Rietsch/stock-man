@@ -17,6 +17,13 @@
 <div class="main-content">
     <div class="header">
         <h1>Inventaire</h1>
+        <!-- Add this button for Excel export -->
+        <a href="{% url 'export_inventory' %}">
+            <button class="button print-excel-button">
+                <img src="{% static 'excel-logo.png' %}" alt="Excel Logo">
+                Exporter vers Excel
+            </button>
+        </a>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Rechercher un produit...">
             <button class="button primary" id="searchButton">Recherche</button>

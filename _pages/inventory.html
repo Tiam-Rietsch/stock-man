@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inventory - Stock Management</title>
   <link rel="stylesheet" href="inventory.css">
 </head>
+
 <body>
   <div class="sidebar">
     <!-- Sidebar content (same as dashboard) -->
@@ -13,6 +15,12 @@
   <div class="main-content">
     <div class="header">
       <h1>Inventory</h1>
+      <!-- Add this button for Excel export -->
+      {% if user.role == 'A' %}
+      <a href="{% url 'export_inventory' %}">
+        <button class="button primary">Exporter vers Excel</button>
+      </a>
+      {% endif %}
       <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search products...">
         <button class="button primary" id="searchButton">Search</button>
@@ -32,7 +40,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="product-row" data-product='{"name":"Router","brand":"Cisco","category":"Electronics","quantity":50,"image":"router.jpg"}'>
+          <tr class="product-row"
+            data-product='{"name":"Router","brand":"Cisco","category":"Electronics","quantity":50,"image":"router.jpg"}'>
             <td>Router</td>
             <td>Cisco</td>
             <td>Electronics</td>
@@ -42,7 +51,8 @@
               <button class="button primary edit-quantity">Edit</button>
             </td>
           </tr>
-          <tr class="product-row" data-product='{"name":"Switch","brand":"Huawei","category":"Electronics","quantity":30,"image":"switch.jpg"}'>
+          <tr class="product-row"
+            data-product='{"name":"Switch","brand":"Huawei","category":"Electronics","quantity":30,"image":"switch.jpg"}'>
             <td>Switch</td>
             <td>Huawei</td>
             <td>Electronics</td>
@@ -134,4 +144,5 @@
 
   <script src="inventory.js"></script>
 </body>
+
 </html>

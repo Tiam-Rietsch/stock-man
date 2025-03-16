@@ -37,6 +37,3 @@ class InventoryRecord(models.Model):
     quantity_recorded = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
     done_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='inventory_recordings')
-
-    def __str__(self):
-        return f'{self.quantity_recorded} {self.product.name} recorded on {self.date} by {self.done_by}'

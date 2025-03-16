@@ -310,6 +310,29 @@ body {
   background-color: #218838;
 }
 
+/* Print to Excel Button */
+.print-excel-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #28a745; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.print-excel-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.print-excel-button img {
+  width: 20px;
+  height: 20px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar {
