@@ -18,7 +18,7 @@
     <h1>Sales</h1>
   </div>
 
-  {% if user.role == 'W' %}
+  {% if user.role == 'M' %}
   <!-- Form and Image Container -->
   <div class="form-image-container">
     <!-- Form -->
@@ -37,7 +37,7 @@
                 {% for product in products %}
                 <option 
                   value="{{ product.id }}"
-                  product-data='{"name": "{{product.name}}", "brand": "{{product.get_brand_display}}", "category": "{{product.get_category_display}}", "unit_price": {{product.unit_price}}, "image": "{{product.image.url}}", "quantity":"{{product.quantity}}"}'
+                  product-data='{"name": "{{product.name}}", "brand": "{{product.get_brand_display}}", "category": "{{product.get_category_display}}", "unit_price": {{product.unit_selling_price}}, "image": "{{product.image.url}}", "quantity":"{{product.quantity}}"}'
                 >
                   {{ product.name }} - {{ product.get_brand_display }}
                 </option>
@@ -114,12 +114,12 @@
       </thead>
       <tbody>
         {% for sale in sales %}
-        <tr class="sale-row" data-sale='{"product":"{{ sale.product.name }}","brand":"{{ sale.product.get_brand_display }}","category":"{{ sale.product.get_category_display }}","image":"{{ sale.product.image.url }}","unitPrice":{{ sale.product.unit_price }},"quantity":{{ sale.quantity }},"totalPrice":{{sale.total_price}},"date":"{{ sale.date }}"}'>
+        <tr class="sale-row" data-sale='{"product":"{{ sale.product.name }}","brand":"{{ sale.product.get_brand_display }}","category":"{{ sale.product.get_category_display }}","image":"{{ sale.product.image.url }}","unitSellingPrice":{{ sale.product.unit_selling_price }},"quantity":{{ sale.quantity }},"totalPrice":{{sale.total_price}},"date":"{{ sale.date }}"}'>
           <td>{{ sale.product.name }}</td>
           <td>{{ sale.product.get_brand_display }}</td>
           <td>{{ sale.product.get_category_display }}</td>
           <td>{{ sale.quantity }}</td>
-          <td>{{ sale.product.unit_price }}</td>
+          <td>{{ sale.product.unit_selling_price }}</td>
           <td>{{ sale.total_price }}</td>
           <td>{{ sale.date }}</td>
           {% if user.role == 'M' %}

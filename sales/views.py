@@ -35,7 +35,8 @@ def sale_add_view(request):
         sale.save()
 
         notification = SaleRecordNotification.objects.create(sale=sale)
-        for user in User.objects.filter(role=Roles.manager): notification.target.add(user)
+        for user in User.objects.filter(role=Roles.admin): notification.target.add(user)
+        notification.target.add(request.user)
         notification.save()
 
         stock_notifications = LowStockNotification.objects.filter(product=product, type=NotificationTypeChoices.low_stock)

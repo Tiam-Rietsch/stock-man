@@ -10,7 +10,7 @@ from sales.models import Sale
 
 def dashboard_view(request):
     context = {
-        'total_stock_value': sum([product.quantity * product.unit_price for product in Product.objects.all()]),
+        'total_stock_value': sum([product.quantity * product.unit_selling_price for product in Product.objects.all()]),
         'total_day_sales': sum([sale.total_price for sale in Sale.objects.filter(date__date=datetime.now().date())]),
         'low_stock_count': len([product for product in Product.objects.filter(quantity__lt=models.F("min_stock"))]),
         'total_products_count': len(Product.objects.all())

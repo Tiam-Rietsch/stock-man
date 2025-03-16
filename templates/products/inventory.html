@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block ttile %}Inventaire - Gestion de stock{% endblock %}
+{% block title %}Inventaire - Gestion de stock{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'sidebar.css' %}">
@@ -23,35 +23,111 @@
         </div>
     </div>
 
-    <!-- Inventory Table -->
-    <div class="inventory-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom Produit</th>
-                    <th>Marque</th>
-                    <th>Categorie</th>
-                    <th>Quantite en stock</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product in products %}
-                <tr class="product-row"
-                    data-product='{"name":"{{ product.name }}","brand":"{{ product.get_brand_display }}","category":"{{ product.get_category_display }}","quantity":{{ product.quantity }},"image":"{{ product.image.url }}"}'>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.get_brand_display }}</td>
-                    <td>{{ product.get_category_display }}</td>
-                    <td>{{ product.quantity }}</td>
-                    <td>
-                        <button class="button success add-quantity" stock-add-url="{% url 'stock_update' product.id %}?supplied=true">Ajouter</button>
-                        <button class="button primary edit-quantity" stock-edit-url="{% url 'stock_update' product.id %}?supplied=false" {% if user.role == 'W' %}hidden{% endif %}>Edit</button>
-                    </td>
-                </tr>
-                {% endfor %}
-                <!-- Add more rows as needed -->
-            </tbody>
-        </table>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-button active" data-tab="all">Tous</button>
+        {% if user.role == 'A' %}
+        <button class="tab-button" data-tab="sold">Produits Vendus</button>
+        {% endif %}
+        <button class="tab-button" data-tab="received">Produits Reçus</button>
+    </div>
+
+    <!-- Inventory Tables -->
+    <div class="tab-content active" id="all">
+        <div class="inventory-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom Produit</th>
+                        <th>Marque</th>
+                        <th>Categorie</th>
+                        <th>Quantite en stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr class="product-row {% if product.quantity < product.min_stock %}alert-row{% endif %}"
+                        data-product='{"name":"{{ product.name }}","brand":"{{ product.get_brand_display }}","category":"{{ product.get_category_display }}","quantity":{{ product.quantity }},"image":"{{ product.image.url }}"}'>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.get_brand_display }}</td>
+                        <td>{{ product.get_category_display }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>
+                            <button class="button success add-quantity" stock-add-url="{% url 'stock_update' product.id %}?supplied=true">Ajouter</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if user.role == 'A' %}
+    <div class="tab-content" id="sold">
+        <div class="inventory-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom Produit</th>
+                        <th>Marque</th>
+                        <th>Categorie</th>
+                        <th>Quantite Vendue</th>
+                        <th>Prix de vente</th>
+                        <th>Prix totale</th>
+                        <th>Par</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in sales %}
+                    <tr class="product-row">
+                        <td>{{ sale.product.name }}</td>
+                        <td>{{ sale.product.get_brand_display }}</td>
+                        <td>{{ sale.product.get_category_display }}</td>
+                        <td>{{ sale.quantity }}</td>
+                        <td>{{ sale.product.unit_selling_price }}</td>
+                        <td>{{ sale.total_price }}</td>
+                        <td>{{ sale.done_by.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="tab-content" id="received">
+        <div class="inventory-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom Produit</th>
+                        <th>Marque</th>
+                        <th>Categorie</th>
+                        <th>Quantite Reçue</th>
+                        <th>Date Reçue</th>
+                        <th>Enregistre par</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inventory_record in inventory_records %}
+                    <tr class="product-row {% if product.quantity < product.min_stock %}alert-row{% endif %}"
+                        data-product='{"name":"{{ inventory_record.product.name }}","brand":"{{ inventory_record.product.get_brand_display }}","category":"{{ inventory_record.product.get_category_display }}","quantity":{{ inventory_record.quantity_recorded }},"image":"{{ inventory_record.product.image.url }}"}'>
+                        <td>{{ inventory_record.product.name }}</td>
+                        <td>{{ inventory_record.product.get_brand_display }}</td>
+                        <td>{{ inventory_record.product.get_category_display }}</td>
+                        <td>{{ inventory_record.quantity_recorded }}</td>
+                        <td>{{ inventory_record.date }}</td>
+                        <td>{{ inventory_record.done_by.name }}</td>
+                        <td>
+                            <button class="button primary edit-quantity" stock-edit-url="{% url 'stock_update' inventory_record.product.id %}?supplied=false&record_id={{ inventory_record.id }}" {% if user.role == 'M' %}hidden{% endif %}>Edit</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

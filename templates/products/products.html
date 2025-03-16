@@ -16,15 +16,18 @@
 <div class="main-content">
     <div class="header">
       <h1>Produits</h1>
-      <button class="button primary" id="addProductButton" {% if user.role == 'W' %}hidden{% endif %}>Ajouter un produit</button>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Rechercher un produit...">
+        <button class="button primary" id="searchButton">Rechercher</button>
+      </div>
+      <button class="button primary" id="addProductButton" {% if user.role == 'M' %}hidden{% endif %}>Ajouter un produit</button>
     </div>
 
     <!-- Products Grid -->
     <div class="products-grid">
-
       {% for product in products %}
       <!-- Product Cards -->
-      <div class="product-card" data-product='{"name":"{{ product.name }}","brand":"{{ product.brand }}","category":"{{product.category }}","quantity":{{ product.quantity }},"unitPrice":{{ product.unit_price }},"image":"{{ product.image.url }}","sid":"{{ product.sid }}","description":"{{ product.description }}", "min_stock": "{{product.min_stock}}" }'>
+      <div class="product-card" data-product='{"name":"{{ product.name }}","brand":"{{ product.brand }}","category":"{{product.category }}","quantity":{{ product.quantity }},"unitBuyPrice":{{ product.unit_buy_price }}, "unitSellingPrice":{{ product.unit_selling_price }}, "image":"{{ product.image.url }}","sid":"{{ product.sid }}","description":"{{ product.description }}", "min_stock": "{{product.min_stock}}" }'>
         <div class="product-image">
           <img src="{{ product.image.url }}" alt="Router">
         </div>
@@ -34,15 +37,14 @@
             <span class="tag category">{{ product.get_category_display }}</span>
             <span class="tag brand">{{ product.get_brand_display }}</span>
           </div>
-          <p class="unit-price">{{ product.unit_price }} XAF</p>
+          <p class="unit-price">{{ product.unit_selling_price }} FCFA</p>
         </div>
         <div class="product-actions">
-          <button class="button success edit-product" edit-url="{% url 'edit_product' product.id %}">{% if user.role == 'W' %}Voir{%else%}Voir and Editer{% endif %}</button>
-          <button class="button danger delete-product" delete-url="{% url 'delete_product' product.id %}" {% if user.role == 'W' %}hidden{% endif %}>Delete</button>
+          <button class="button success edit-product" edit-url="{% url 'edit_product' product.id %}">{% if user.role == 'M' %}Voir{%else%}Voir and Editer{% endif %}</button>
+          <button class="button danger delete-product" delete-url="{% url 'delete_product' product.id %}" {% if user.role == 'M' %}hidden{% endif %}>Delete</button>
         </div>
       </div>
       {% endfor %}
-
     </div>
   </div>
 
@@ -81,18 +83,22 @@
           </div>
           <div class="form-group">
             <label for="addDescription">Description</label>
-            <textarea id="addDescription" name="description" rows="4" required></textarea>
+            <textarea id="addDescription" name="description" rows="4"></textarea>
           </div>
           <div class="form-group">
-            <label for="addUnitPrice">Prix unitaire</label>
-            <input type="number" id="addUnitPrice" name="unit_price" required>
+            <label for="editUnitPrice">Prix d'achat</label>
+            <input type="number" id="addUnitBuyPrice" name="unit_buy_price" required>
+          </div>
+          <div class="form-group">
+            <label for="editUnitPrice">Prix de vente</label>
+            <input type="number" id="addUnitSellingPrice" name="unit_selling_price" required>
           </div>
           <div class="form-group">
             <label for="addMinStock">Stock Minimal</label>
-            <input type="number" id="addMinStock" name="min_stock" required>
+            <input type="number" id="addMinStock" name="min_stock" placeholder="par defaut: 10">
           </div>
           <input type="file" id="addUploadImage" accept="image/*" name="image" style="display: none;">
-          <button type="submit" class="button primary save-button" {% if user.role == 'W' %}hidden{% endif %}>Sauvegarder</button>
+          <button type="submit" class="button primary save-button" {% if user.role == 'M' %}hidden{% endif %}>Sauvegarder</button>
         </form>
 
         <!-- Product Image -->
@@ -100,7 +106,7 @@
           <div class="product-image">
             <img id="addProductImage" src="placeholder.jpg" alt="Product Image">
           </div>
-          <button class="button secondary" id="addUploadImageButton" {% if user.role == 'W' %}hidden{% endif %}>Importer une image</button>
+          <button class="button secondary" id="addUploadImageButton" {% if user.role == 'M' %}hidden{% endif %}>Importer une image</button>
         </div>
       </div>
     </div>
@@ -141,18 +147,22 @@
           </div>
           <div class="form-group">
             <label for="editDescription">Description</label>
-            <textarea id="editDescription" rows="4" name="description" required></textarea>
+            <textarea id="editDescription" rows="4" name="description"></textarea>
           </div>
           <div class="form-group">
-            <label for="editUnitPrice">Prix unitaire</label>
-            <input type="number" id="editUnitPrice" name="unit_price" required>
+            <label for="editUnitPrice">Prix d'achat</label>
+            <input type="number" id="editUnitBuyPrice" name="unit_buy_price" required>
+          </div>
+          <div class="form-group">
+            <label for="editUnitPrice">Prix de vente</label>
+            <input type="number" id="editUnitSellingPrice" name="unit_selling_price" required>
           </div>
           <div class="form-group">
             <label for="editMinStock">Stock minimal</label>
             <input type="number" id="editMinStock" name="min_stock" required>
           </div>
           <input type="file" id="editUploadImage" accept="image/*" name="image" style="display: none;">
-          <button type="submit" class="button primary save-button" {% if user.role == 'W' %}hidden{% endif %}>Sauvegarder</button>
+          <button type="submit" class="button primary save-button" {% if user.role == 'M' %}hidden{% endif %}>Sauvegarder</button>
         </form>
 
         <!-- Product Image -->
@@ -160,7 +170,7 @@
           <div class="product-image">
             <img id="editProductImage" src="placeholder.jpg" alt="Product Image">
           </div>
-          <button class="button secondary" id="editUploadImageButton" {% if user.role == 'W' %}hidden{% endif %}>Importer une image</button>
+          <button class="button secondary" id="editUploadImageButton" {% if user.role == 'M' %}hidden{% endif %}>Importer une image</button>
         </div>
       </div>
     </div>
@@ -180,7 +190,6 @@
     </form>
   </div>
 {% endblock %}
-
 
 {% block script %}
 <script src="{% static 'products/products.js' %}"></script>

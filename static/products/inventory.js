@@ -18,9 +18,9 @@ document.querySelectorAll(".add-quantity").forEach((button) => {
     // Get product data from the row's data attribute
     const productData = JSON.parse(currentProductRow.getAttribute("data-product"));
     
-    // set the form action for the add form
-    const stockAddUrl = button.getAttribute('stock-add-url')
-    document.getElementById('addQuantityForm').setAttribute('action', stockAddUrl)
+    // Set the form action for the add form
+    const stockAddUrl = button.getAttribute('stock-add-url');
+    document.getElementById('addQuantityForm').setAttribute('action', stockAddUrl);
 
     // Populate the add modal with product data
     document.getElementById("addProductImage").src = productData.image;
@@ -42,9 +42,9 @@ document.querySelectorAll(".edit-quantity").forEach((button) => {
     // Get product data from the row's data attribute
     const productData = JSON.parse(currentProductRow.getAttribute("data-product"));
 
-    // set the form action for the edit form
-    const stockEditUrl = button.getAttribute('stock-edit-url')
-    document.getElementById('editQuantityForm').setAttribute('action', stockEditUrl)
+    // Set the form action for the edit form
+    const stockEditUrl = button.getAttribute('stock-edit-url');
+    document.getElementById('editQuantityForm').setAttribute('action', stockEditUrl);
 
     // Populate the edit modal with product data
     document.getElementById("editProductImage").src = productData.image;
@@ -67,11 +67,11 @@ closeEditModal.addEventListener("click", () => {
   editModalOverlay.classList.remove("active");
 });
 
-
 // Search functionality
 searchButton.addEventListener("click", () => {
   const searchTerm = searchInput.value.toLowerCase();
-  const rows = document.querySelectorAll(".product-row");
+  const activeTab = document.querySelector(".tab-content.active");
+  const rows = activeTab.querySelectorAll(".product-row");
 
   rows.forEach((row) => {
     const productName = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
@@ -80,5 +80,27 @@ searchButton.addEventListener("click", () => {
     } else {
       row.style.display = "none";
     }
+  });
+});
+
+// Tab functionality
+document.querySelectorAll(".tab-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const tabId = button.getAttribute("data-tab");
+
+    // Remove active class from all tabs and buttons
+    document.querySelectorAll(".tab-button").forEach((btn) => btn.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach((content) => content.classList.remove("active"));
+
+    // Add active class to the clicked tab and button
+    button.classList.add("active");
+    document.getElementById(tabId).classList.add("active");
+
+    // Clear the search input and reset the table display when switching tabs
+    searchInput.value = "";
+    const rows = document.getElementById(tabId).querySelectorAll(".product-row");
+    rows.forEach((row) => {
+      row.style.display = "";
+    });
   });
 });

@@ -1,15 +1,21 @@
+{% load static %}
+
 <div class="sidebar">
     <div class="logo">
-        <img src="logo.png" alt="Stock Management Logo">
+        <img src="{% static 'logo.jpg' %}" alt="Stock Management Logo">
     </div>
     <nav>
         <a href="{% url 'products_list' %}" {% if active == 'products' %}class="active"{% endif %}>📦 Produits</a>
         <a href="{% url 'inventory' %}" {% if active == 'inventory' %}class="active"{% endif %}>📋 Inventaire</a>
+
+        {% if user.role == 'M' %}
         <a href="{% url 'sales_list' %}" {% if active == 'sales' %}class="active"{% endif %}>💰 Ventes</a>
+        {% endif %}
+        
         <a href="{% url 'notifications' %}"  {% if active == 'notifications' %}class="active"{% endif %}>🔔 Notifications</a>
 
         <!-- Manager Only Links -->
-        {% if user.role == 'M' %}
+        {% if user.role == 'A' %}
         <a href="{% url 'dashboard' %}" {% if active == 'dashboard' %}class="active"{% endif %}>📊 Tableaux de bord</a>
         <a href="{% url 'user_list' %}" {% if active == 'users' %}class="active"{% endif %}>👥 Utilisateurs</a>
         {% endif %}

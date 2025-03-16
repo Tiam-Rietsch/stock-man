@@ -38,7 +38,8 @@ document.querySelectorAll(".edit-product").forEach((button) => {
     document.getElementById("editCategory").value = productData.category;
     document.getElementById("editSid").value = productData.sid;
     document.getElementById("editDescription").value = productData.description;
-    document.getElementById("editUnitPrice").value = productData.unitPrice;
+    document.getElementById("editUnitSellingPrice").value = productData.unitSellingPrice;
+    document.getElementById("editUnitBuyPrice").value = productData.unitBuyPrice;
     document.getElementById("editProductImage").src = productData.image;
     document.getElementById("editMinStock").value = productData.min_stock;
 
@@ -111,4 +112,17 @@ document.getElementById("editUploadImage").addEventListener("change", (e) => {
   }
 });
 
+// Search Functionality
+document.getElementById("searchButton").addEventListener("click", () => {
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+  const productCards = document.querySelectorAll(".product-card");
 
+  productCards.forEach((card) => {
+    const productName = card.querySelector(".product-info h3").textContent.toLowerCase();
+    if (productName.includes(searchTerm)) {
+      card.style.display = "flex";
+    } else {
+      card.style.display = "none";
+    }
+  });
+});

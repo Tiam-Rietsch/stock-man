@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Product, ProductCategory, ProductBrands
+from .models import Product, ProductCategory, ProductBrands, InventoryRecord
 from notifications.models import InventoryUpdateNotification, LowStockNotification, NotificationTypeChoices
 from useraccounts.models import Roles, User
+from sales.models import Sale
 
 @login_required(login_url='login')
 def products_list_view(request):
@@ -24,11 +25,9 @@ def product_add_view(request):
         category = request.POST['category']
         sid = request.POST['sid']
         description = request.POST['description']
-        unit_price = request.POST['unit_price']
+        unit_selling_price = request.POST['unit_selling_price']
+        unit_buy_price = request.POST['unit_buy_price']
         min_stock = request.POST['min_stock']
-
-        print(request.FILES)
-
         image = request.FILES['image']
 
         product = Product.objects.create(
@@ -37,10 +36,12 @@ def product_add_view(request):
             category=category,
             sid=sid,
             description=description,
-            unit_price=unit_price,
+            unit_selling_price=unit_selling_price,
+            unit_buy_price=unit_buy_price,
             image=image,
-            min_stock=min_stock
         )
+        if min_stock:
+            product.min_stock = min_stock
         product.save()
 
         notification = InventoryUpdateNotification.objects.create(product=product)
@@ -58,8 +59,9 @@ def product_edit_view(request, id):
         category = request.POST['category']
         sid = request.POST['sid']
         description = request.POST['description']
-        unit_price = request.POST['unit_price']
-        image = request.FILES['image']
+        unit_buy_price = request.POST['unit_buy_price']
+        unit_selling_price = request.POST['unit_selling_price']
+        image = request.FILES['image'] if request.FILES else None
         min_stock = request.POST['min_stock']
 
         product = Product.objects.get(pk=id)
@@ -68,9 +70,11 @@ def product_edit_view(request, id):
         product.category = category
         product.sid = sid
         product.description = description
-        product.unit_price = unit_price
-        product.image = image
+        product.unit_buy_price = unit_buy_price
+        product.unit_selling_price = unit_selling_price
         product.min_stock = min_stock
+        if image:
+            product.image = image
 
         product.save()
 
@@ -89,7 +93,9 @@ def product_delete_view(request, id):
 def inventory_view(request):
     products = Product.objects.all()
     context = {
-        'products': products
+        'products': products,
+        'inventory_records': InventoryRecord.objects.all(),
+        'sales': Sale.objects.all()
     }
     return render(request, 'products/inventory.html', context)
 
@@ -99,11 +105,24 @@ def stock_update_view(request, id):
     if request.method == 'POST':
         quantity = int(request.POST['quantity'])
         supplied = bool(request.GET['supplied'] == 'true')
-
+        record_id = request.GET['record_id'] if not supplied else None
         product = Product.objects.get(pk=id)
 
-        product.quantity = product.quantity + quantity if supplied else quantity
-        product.save()
+        if supplied:
+            inventory_record = InventoryRecord.objects.create(
+                quantity_recorded=quantity,
+                done_by=request.user
+            )
+            inventory_record.save()
+            product.inventory_records.add(inventory_record)
+            product.quantity = product.quantity + quantity
+            product.save()
+        else:
+            inventory_record = InventoryRecord.objects.get(pk=record_id)
+            product.quantity += quantity - inventory_record.quantity_recorded
+            inventory_record.quantity_recorded = quantity
+            inventory_record.save()
+            product.save()
 
         notification = InventoryUpdateNotification.objects.create(product=product)
         for user in User.objects.all(): notification.target.add(user)
@@ -123,4 +142,6 @@ def stock_update_view(request, id):
 
         return redirect('inventory')
     
+
+
 

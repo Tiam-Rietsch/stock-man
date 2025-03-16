@@ -14,8 +14,8 @@ class StatusChoices(models.TextChoices):
 class NotificationTypeChoices(models.TextChoices):
     base = 'D', 'Base Notification'
     low_stock = 'A', 'Alerte Stock Faible'
-    inventory_update = 'B', "Mis a jour de l'Inventaire"
-    sale_record = 'C', "Notification de Vente"
+    inventory_update = 'C', "Mis a jour de l'Inventaire"
+    sale_record = 'B', "Notification de Vente"
 
 
 class Notification(models.Model):
