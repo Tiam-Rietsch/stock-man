@@ -193,7 +193,7 @@ body {
 }
 
 .recent-activities {
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
@@ -202,7 +202,12 @@ body {
 }
 
 .recent-activities li {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  padding: 12px 5px;
+  border-bottom: 1px solid rgb(162, 162, 162);
   font-size: 14px;
   color: #666;
 }

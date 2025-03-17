@@ -152,7 +152,13 @@ function populateChartData(data) {
                 type: "pie",
                 height: 350,
             },
-            colors: ["#007bff", "#28a745", "#dc3545", "#ffc107"],
+            colors: [
+                "#007bff", "#28a745", "#dc3545", "#ffc107",
+                "#0056b3", "#1e7e34", "#a71d2a", "#e0a800",
+                "#6c757d", "#17a2b8", "#f8f9fa", "#343a40",
+                "#ffffff", "#000000", "#6610f2", "#fd7e14",
+                "#20c997", "#ff6b6b", "#4a90e2", "#f4f4f4"
+            ],
             // quantity of products left
             series: data.inventory_overview.quantities,
             // products in the inventory

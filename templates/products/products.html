@@ -40,7 +40,7 @@
           <p class="unit-price">{{ product.unit_selling_price }} FCFA</p>
         </div>
         <div class="product-actions">
-          <button class="button success edit-product" edit-url="{% url 'edit_product' product.id %}">{% if user.role == 'M' %}Voir{%else%}Voir and Editer{% endif %}</button>
+          <button class="button success edit-product" edit-url="{% url 'edit_product' product.id %}">{% if user.role == 'M' %}Voir{%else%}Voir et Editer{% endif %}</button>
           <button class="button danger delete-product" delete-url="{% url 'delete_product' product.id %}" {% if user.role == 'M' %}hidden{% endif %}>Delete</button>
         </div>
       </div>
@@ -52,7 +52,7 @@
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal">
       <button class="close-button" id="closeAddModal">&times;</button>
-      <h2>Add Product</h2>
+      <h2>Ajouter un produit</h2>
       <div class="form-image-container">
         <!-- Form -->
         <form enctype="multipart/form-data" id="addProductForm" method="POST" action="{% url 'add_product' %}">

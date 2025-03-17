@@ -69,16 +69,9 @@
 			<h3>Activites recentes</h3>
 			<div class="recent-activities">
 				<ul>
-					<li>2023-10-01: Added 50 Routers to Inventory</li>
-					<li>2023-10-01: Recorded Sale of 5 Switches</li>
-					<li>2023-10-01: Updated Stock for Router</li>
-					<li>2023-09-30: Added 20 Cables to Inventory</li>
-					<li>2023-09-30: Recorded Sale of 10 Adapters</li>
-					<li>2023-09-29: Updated Stock for Switch</li>
-					<li>2023-09-28: Added 15 Modems to Inventory</li>
-					<li>2023-09-28: Recorded Sale of 8 Hubs</li>
-					<li>2023-09-27: Updated Stock for Cable</li>
-					<li>2023-09-27: Added 30 Patch Panels to Inventory</li>
+					{% for notification in notifications %}
+					<li class="activity-item">{{ notification.date|timesince }}: {{ notification.body }}</li>
+					{% endfor %}
 				</ul>
 			</div>
 		</div>
