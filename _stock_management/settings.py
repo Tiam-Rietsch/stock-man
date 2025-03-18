@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'useraccounts',
     'products',
+    'inventory',
     'sales',
     'dashboard',
     'notifications',

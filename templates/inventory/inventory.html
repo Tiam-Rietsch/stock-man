@@ -6,7 +6,7 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'sidebar.css' %}">
-<link rel="stylesheet" href="{% static 'products/inventory.css' %}">
+<link rel="stylesheet" href="{% static 'inventory/inventory.css' %}">
 {% endblock %}
 
 {% block sidebar %}
@@ -18,12 +18,14 @@
     <div class="header">
         <h1>Inventaire</h1>
         <!-- Add this button for Excel export -->
+        {% if user.role == 'A' %}
         <a href="{% url 'export_inventory' %}">
             <button class="button print-excel-button">
                 <img src="{% static 'excel-logo.png' %}" alt="Excel Logo">
                 Exporter vers Excel
             </button>
         </a>
+        {% endif %}
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Rechercher un produit...">
             <button class="button primary" id="searchButton">Recherche</button>
@@ -216,5 +218,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'products/inventory.js' %}"></script>
+<script src="{% static 'inventory/inventory.js' %}"></script>
 {% endblock %}
