@@ -16,12 +16,13 @@ from sales.models import Sale
 
 @login_required(login_url='login')
 def export_inventory_to_excel(request):
-    # Create a workbook and add sheets
+    """Exporte les données d'inventaire vers un fichier Excel."""
+    # Création d'un classeur et ajout de feuilles
     wb = Workbook()
 
-    # Define styles
-    header_fill = PatternFill(start_color="007BFF", end_color="007BFF", fill_type="solid")  # Blue background
-    header_font = Font(color="FFFFFF", bold=True)  # White text, bold
+    # Définition des styles
+    header_fill = PatternFill(start_color="007BFF", end_color="007BFF", fill_type="solid")  # Fond bleu
+    header_font = Font(color="FFFFFF", bold=True)  # Texte blanc en gras
     border = Border(
         left=Side(style='thin'),
         right=Side(style='thin'),
@@ -30,12 +31,12 @@ def export_inventory_to_excel(request):
     )
     alignment = Alignment(horizontal="left", vertical="center")
 
-    # Sheet 1: All Inventory
+    # Feuille 1 : Tout l'inventaire
     ws_all = wb.active
-    ws_all.title = "All Inventory"
-    ws_all.append(['Name', 'Brand', 'Category', 'Quantity in Stock'])
+    ws_all.title = "Tout l'inventaire"
+    ws_all.append(['Nom', 'Marque', 'Catégorie', 'Quantité en stock'])
 
-    # Apply header styles
+    # Appliquer les styles de l'en-tête
     for col in range(1, 5):
         cell = ws_all.cell(row=1, column=col)
         cell.fill = header_fill
@@ -43,7 +44,7 @@ def export_inventory_to_excel(request):
         cell.border = border
         cell.alignment = alignment
 
-    # Add data and apply styles
+    # Ajouter les données et appliquer les styles
     products = Product.objects.all()
     for product in products:
         ws_all.append([product.name, product.get_brand_display(), product.get_category_display(), product.quantity])
@@ -53,17 +54,17 @@ def export_inventory_to_excel(request):
             cell.border = border
             cell.alignment = alignment
 
-    # Set column widths
-    ws_all.column_dimensions['A'].width = 30  # Name
-    ws_all.column_dimensions['B'].width = 20  # Brand
-    ws_all.column_dimensions['C'].width = 20  # Category
-    ws_all.column_dimensions['D'].width = 15  # Quantity
+    # Définir les largeurs des colonnes
+    ws_all.column_dimensions['A'].width = 30  # Nom
+    ws_all.column_dimensions['B'].width = 20  # Marque
+    ws_all.column_dimensions['C'].width = 20  # Catégorie
+    ws_all.column_dimensions['D'].width = 15  # Quantité
 
-    # Sheet 2: Products Registered (Inventory Records)
-    ws_registered = wb.create_sheet("Products Registered")
-    ws_registered.append(['Product Name', 'Brand', 'Category', 'Quantity Recorded', 'Date', 'Recorded By'])
+    # Feuille 2 : Produits enregistrés (Historique des inventaires)
+    ws_registered = wb.create_sheet("Produits enregistrés")
+    ws_registered.append(['Nom du produit', 'Marque', 'Catégorie', 'Quantité enregistrée', 'Date', 'Enregistré par'])
 
-    # Apply header styles
+    # Appliquer les styles de l'en-tête
     for col in range(1, 7):
         cell = ws_registered.cell(row=1, column=col)
         cell.fill = header_fill
@@ -71,10 +72,10 @@ def export_inventory_to_excel(request):
         cell.border = border
         cell.alignment = alignment
 
-    # Add data and apply styles
+    # Ajouter les données et appliquer les styles
     inventory_records = InventoryRecord.objects.all()
     for record in inventory_records:
-        naive_date = make_naive(record.date)
+        naive_date = make_naive(record.date)  # Convertir la date en temps local
         ws_registered.append([
             record.product.name,
             record.product.get_brand_display(),
@@ -89,19 +90,19 @@ def export_inventory_to_excel(request):
             cell.border = border
             cell.alignment = alignment
 
-    # Set column widths
-    ws_registered.column_dimensions['A'].width = 30  # Product Name
-    ws_registered.column_dimensions['B'].width = 20  # Brand
-    ws_registered.column_dimensions['C'].width = 20  # Category
-    ws_registered.column_dimensions['D'].width = 15  # Quantity Recorded
+    # Définir les largeurs des colonnes
+    ws_registered.column_dimensions['A'].width = 30  # Nom du produit
+    ws_registered.column_dimensions['B'].width = 20  # Marque
+    ws_registered.column_dimensions['C'].width = 20  # Catégorie
+    ws_registered.column_dimensions['D'].width = 15  # Quantité enregistrée
     ws_registered.column_dimensions['E'].width = 20  # Date
-    ws_registered.column_dimensions['F'].width = 20  # Recorded By
+    ws_registered.column_dimensions['F'].width = 20  # Enregistré par
 
-    # Sheet 3: Products Sold
-    ws_sold = wb.create_sheet("Products Sold")
-    ws_sold.append(['Product Name', 'Brand', 'Category', 'Quantity Sold', 'Unit Selling Price', 'Total Price', 'Sold By'])
+    # Feuille 3 : Produits vendus
+    ws_sold = wb.create_sheet("Produits vendus")
+    ws_sold.append(['Nom du produit', 'Marque', 'Catégorie', 'Quantité vendue', 'Prix unitaire', 'Prix total', 'Vendu par'])
 
-    # Apply header styles
+    # Appliquer les styles de l'en-tête
     for col in range(1, 8):
         cell = ws_sold.cell(row=1, column=col)
         cell.fill = header_fill
@@ -109,7 +110,7 @@ def export_inventory_to_excel(request):
         cell.border = border
         cell.alignment = alignment
 
-    # Add data and apply styles
+    # Ajouter les données et appliquer les styles
     sales = Sale.objects.all()
     for sale in sales:
         ws_sold.append([
@@ -127,29 +128,30 @@ def export_inventory_to_excel(request):
             cell.border = border
             cell.alignment = alignment
 
-    # Set column widths
-    ws_sold.column_dimensions['A'].width = 30  # Product Name
-    ws_sold.column_dimensions['B'].width = 20  # Brand
-    ws_sold.column_dimensions['C'].width = 20  # Category
-    ws_sold.column_dimensions['D'].width = 15  # Quantity Sold
-    ws_sold.column_dimensions['E'].width = 15  # Unit Selling Price
-    ws_sold.column_dimensions['F'].width = 15  # Total Price
-    ws_sold.column_dimensions['G'].width = 20  # Sold By
+    # Définir les largeurs des colonnes
+    ws_sold.column_dimensions['A'].width = 30  # Nom du produit
+    ws_sold.column_dimensions['B'].width = 20  # Marque
+    ws_sold.column_dimensions['C'].width = 20  # Catégorie
+    ws_sold.column_dimensions['D'].width = 15  # Quantité vendue
+    ws_sold.column_dimensions['E'].width = 15  # Prix unitaire
+    ws_sold.column_dimensions['F'].width = 15  # Prix total
+    ws_sold.column_dimensions['G'].width = 20  # Vendu par
 
-    # Set row heights
+    # Définir les hauteurs des lignes
     for sheet in wb:
         for row in sheet.iter_rows():
-            sheet.row_dimensions[row[0].row].height = 20  # Set row height to 20
+            sheet.row_dimensions[row[0].row].height = 20  # Hauteur de ligne fixée à 20
 
-    # Save the workbook to a HttpResponse
+    # Sauvegarder le classeur dans une réponse HTTP
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="inventory_report.xlsx"'
+    response['Content-Disposition'] = 'attachment; filename="rapport_inventaire.xlsx"'
     wb.save(response)
 
     return response
 
 @login_required(login_url='login')
 def inventory_view(request):
+    """Affiche la vue de l'inventaire avec les produits, les enregistrements et les ventes."""
     products = Product.objects.all()
     context = {
         'products': products,
@@ -161,6 +163,7 @@ def inventory_view(request):
 
 @login_required(login_url='login')
 def stock_update_view(request, id):
+    """Gère la mise à jour du stock d'un produit."""
     if request.method == 'POST':
         quantity = int(request.POST['quantity'])
         supplied = bool(request.GET['supplied'] == 'true')
@@ -168,6 +171,7 @@ def stock_update_view(request, id):
         product = Product.objects.get(pk=id)
 
         if supplied:
+            # Créer un nouvel enregistrement d'inventaire
             inventory_record = InventoryRecord.objects.create(
                 quantity_recorded=quantity,
                 done_by=request.user
@@ -177,16 +181,19 @@ def stock_update_view(request, id):
             product.quantity = product.quantity + quantity
             product.save()
         else:
+            # Mettre à jour un enregistrement d'inventaire existant
             inventory_record = InventoryRecord.objects.get(pk=record_id)
             product.quantity += quantity - inventory_record.quantity_recorded
             inventory_record.quantity_recorded = quantity
             inventory_record.save()
             product.save()
 
+        # Envoyer une notification de mise à jour de l'inventaire
         notification = InventoryUpdateNotification.objects.create(product=product)
         for user in User.objects.all(): notification.target.add(user)
         notification.save()
 
+        # Gérer les notifications de stock faible
         stock_notifications = LowStockNotification.objects.filter(product=product, type=NotificationTypeChoices.low_stock)
         if len(stock_notifications) > 0:
             for notification in stock_notifications:
@@ -200,7 +207,3 @@ def stock_update_view(request, id):
             notification.save()
 
         return redirect('inventory')
-    
-
-
-
