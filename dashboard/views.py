@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.http import JsonResponse
 from datetime import datetime, timedelta
@@ -9,6 +10,7 @@ from sales.models import Sale
 from notifications.models import Notification
 
 
+@login_required()
 def dashboard_view(request):
     """Affiche le tableau de bord avec les statistiques principales."""
     context = {

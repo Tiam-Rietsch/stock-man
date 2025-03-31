@@ -63,3 +63,22 @@ class SaleRecordNotification(Notification):
         self.type = NotificationTypeChoices.sale_record
         self.body = f'Vente de  { self.sale.quantity } "{ self.sale.product.name} | {self.sale.product.get_brand_display() }" par { self.sale.done_by.name }.'
         return super().save(*args, **kwargs)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
